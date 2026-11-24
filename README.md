@@ -11,8 +11,12 @@ micro_contral/
 ├── README.md                                       # 本文件（项目总览与原理图预览）
 ├── docs/
 │   ├── clktree_audit_report.md                     # clktree 原理图重建与网表逐条对账报告
-│   ├── conversation_log.md                         # 完整硬件设计与优化对话记录（Markdown）
 │   ├── schematic_conventions.md                    # 沉淀的嘉立创 EDA 模块化布线与防重叠规范
+│   ├── conversations/                              # 相关硬件设计、审查与调研对话记录
+│   │   ├── 01_clktree_schematic_and_wiring_rules.md
+│   │   ├── 02_nvmw_architecture_and_pcb_review.md
+│   │   ├── 03_microwave_source_research_status_and_specs.md
+│   │   └── 04_patest_board_bringup.md
 │   └── requirements/
 │       ├── _原始需求_微波源设计要求1009.docx         # 微波源原始需求文档
 │       └── 参考时钟_选型与连接规格_v1.md              # 参考时钟子系统选型与连接规格书 v1
@@ -48,6 +52,10 @@ micro_contral/
 ## 关联文档
 
 - 📋 [原理图与网表完整对账报告](./docs/clktree_audit_report.md)
-- 💬 [完整硬件设计对话记录](./docs/conversation_log.md)
 - 📐 [嘉立创 EDA 原理图模块化布线与防重叠规范](./docs/schematic_conventions.md)
 - 📄 [参考时钟选型与连接规格 v1](./docs/requirements/参考时钟_选型与连接规格_v1.md)
+- 💬 **对话记录归档**：
+  - [01 · 参考时钟子系统（clktree）原理图重建与布线规范](./docs/conversations/01_clktree_schematic_and_wiring_rules.md)
+  - [02 · NV 微波源整机架构、原理图与 PCB 审查](./docs/conversations/02_nvmw_architecture_and_pcb_review.md)
+  - [03 · 微波源国内外研究现状与核心指标提取](./docs/conversations/03_microwave_source_research_status_and_specs.md)
+  - [04 · 功放测试板（patest）首版上电记录](./docs/conversations/04_patest_board_bringup.md)
