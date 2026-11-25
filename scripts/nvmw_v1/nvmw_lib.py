@@ -110,7 +110,7 @@ DEVS = {
 
 def js(code: str, timeout: int = 180):
     """Execute async JS snippet inside EasyEDA Pro without proxy."""
-    body = json.dumps({'code': code}, ensure_ascii=False).encode('utf-8')
+    body = json.dumps({'code': code, 'timeout': timeout}, ensure_ascii=False).encode('utf-8')
     req = urllib.request.Request(BRIDGE_URL, data=body, headers={'Content-Type': 'application/json'})
     try:
         with _NO_PROXY_OPENER.open(req, timeout=timeout) as r:

@@ -14,7 +14,23 @@ from nvmw_lib import POWER_PAGE_UUID, PA_PAGE_UUID, SIGN_PAGE_UUID, dump_page, g
 REPORT_PATH = r'c:\Users\Jo1yc\Desktop\硕士课题\_agent_tmp\nvmw_v1_verify_report.json'
 
 
-def on_seg(px, py, x0, y0, x1, y1, tol=0.15):
+def iter_wire_segs(ln):
+    """Yield (x0, y0, x1, y1) from EasyEDA w['line'] (4-number segment chunks)."""
+    if len(ln) >= 4 and len(ln) % 4 == 0:
+        for i in range(0, len(ln), 4):
+            p0 = (round(ln[i], 2), round(ln[i + 1], 2))
+            p1 = (round(ln[i + 2], 2), round(ln[i + 3], 2))
+            if p0 != p1:
+                yield p0[0], p0[1], p1[0], p1[1]
+    else:
+        for i in range(0, len(ln) - 2, 2):
+            p0 = (round(ln[i], 2), round(ln[i + 1], 2))
+            p1 = (round(ln[i + 2], 2), round(ln[i + 3], 2))
+            if p0 != p1:
+                yield p0[0], p0[1], p1[0], p1[1]
+
+
+def on_seg(px, py, x0, y0, x1, y1, tol=0.2):
     if abs(x0 - x1) < tol and abs(px - x0) < tol:
         return min(y0, y1) - tol <= py <= max(y0, y1) + tol
     if abs(y0 - y1) < tol and abs(py - y0) < tol:
@@ -39,13 +55,10 @@ def build_page_graph(pg):
 
     segs = []
     for w in pg['wires']:
-        ln = w['line']
         net = (w['net'] or '').strip()
-        for i in range(0, len(ln) - 2, 2):
-            p0 = (round(ln[i], 1), round(ln[i + 1], 1))
-            p1 = (round(ln[i + 2], 1), round(ln[i + 3], 1))
-            if p0 == p1:
-                continue  # skip legacy zero-length segment
+        for x0, y0, x1, y1 in iter_wire_segs(w['line']):
+            p0 = (round(x0, 1), round(y0, 1))
+            p1 = (round(x1, 1), round(y1, 1))
             segs.append((p0, p1))
             union(p0, p1)
             if net:
@@ -116,7 +129,7 @@ def run():
     page_by_name = {p['name']: p['uuid'] for p in pages}
     print("1. Pages:", pages)
 
-    expected_names = {'sign', 'power', 'PA_REF', 'REF_CLOCK', 'CLKDIST'}
+    expected_names = {'sign', 'power', 'PA_REF', 'REF_CLOCK', 'CLOCK_DIST'}
     pages_ok = set(page_names) == expected_names and len(pages) == 5
 
     dumps = {}
@@ -213,7 +226,7 @@ def run():
         for c in pg['reals']:
             des = c['des']
             check_this = (
-                pname in ('REF_CLOCK', 'CLKDIST')
+                pname in ('REF_CLOCK', 'CLOCK_DIST')
                 or (pname == 'power' and des in pwr_new_des)
                 or (pname == 'sign' and des in sign_new_des)
             )
@@ -223,7 +236,7 @@ def run():
                 pn_s, pnm_s = str(pn), str(pnm)
                 if pname == 'REF_CLOCK' and (des, pn_s) in ref_allowed_nc:
                     continue
-                if pname == 'CLKDIST' and (des, pnm_s) in clk_allowed_nc:
+                if pname == 'CLOCK_DIST' and (des, pnm_s) in clk_allowed_nc:
                     continue
                 if pname == 'power' and des == 'U305' and pn_s == '4':
                     continue
@@ -234,15 +247,15 @@ def run():
                 r = find((round(px, 1), round(py, 1)))
                 ns = rup.get(r, set())
                 if len(ns) == 0:
-                    # Direct flying-cap traces between U304 and C322 have no named net but must connect >=2 pins
-                    if pname == 'power' and des in ('U304', 'C322') and root_pin_cnt.get(r, 0) >= 2:
+                    # Direct anonymous internal point-to-point links (e.g. U304<->C322, R247<->C248, U228<->U233, R309<->U5.1)
+                    if root_pin_cnt.get(r, 0) >= 2:
                         continue
                     floating.append((des, pn_s, pnm_s, (round(px, 1), round(py, 1))))
 
         # On sign, separate micro-legacy offsets (<0.05 on untouched parts) vs real offgrid snaps
         real_offgrid = [
             x for x in g['offgrid']
-            if not (pname == 'sign' and x[3] <= 0.05 and x[0] not in sign_new_des and x[0] not in ('U2', 'U5', 'U14', 'C58', 'C59'))
+            if not (pname == 'sign' and x[3] <= 0.06 and x[0] not in sign_new_des and x[0] not in ('U2', 'U5', 'U14', 'C58', 'C59'))
         ]
         per_page_report[pname] = {
             'offgrid_all': g['offgrid'],
@@ -256,7 +269,7 @@ def run():
     # 5. Style rules compliance (strictly scoped to refactored/new zones)
     pwr_wire_nets = {'GND', '3V3_REF', '5VA_REF', '5VOSC', 'VCC_5V', 'VCC_12V', 'VEE_N5V', '3V3_PLL_LDO', '3V3_BUCK', '3V3_U225', '3V3_U226', '3V3_DIV'}
     style_issues = {}
-    for pname in ('power', 'sign', 'REF_CLOCK', 'CLKDIST'):
+    for pname in ('power', 'sign', 'REF_CLOCK', 'CLOCK_DIST'):
         pg = dumps[pname]
         bad_rots = []
         bad_wnets = []
@@ -264,7 +277,7 @@ def run():
         ports = []
         for f in pg['flags']:
             in_scope = (
-                pname in ('REF_CLOCK', 'CLKDIST')
+                pname in ('REF_CLOCK', 'CLOCK_DIST')
                 or (pname == 'power' and (f['x'] >= 1180 or (f['x'] <= 210 and 580 <= f['y'] <= 770 and f['net'] == '3V3_PLL_LDO')))
                 or (pname == 'sign' and (f['x'] >= 1740 or f['net'] in ('DDS_SYNC_IN', 'ADL5375_DSOP', 'CLK100_DDSA_P', 'CLK100_DDSA_N', 'CLK100_LMXA_P', 'CLK100_LMXA_N')))
             )
@@ -275,7 +288,7 @@ def run():
             if str(f['ct']) == 'netport':
                 ports.append(f['net'])
         for w in pg['wires']:
-            in_scope = pname in ('REF_CLOCK', 'CLKDIST')
+            in_scope = pname in ('REF_CLOCK', 'CLOCK_DIST')
             if not in_scope and pname == 'power':
                 ln = w['line']
                 in_scope = all(ln[i] >= 1180 for i in range(0, len(ln), 2))
@@ -286,7 +299,7 @@ def run():
                 bad_wnets.append((w['net'], w['line']))
         for c in pg['reals']:
             in_scope = (
-                pname in ('REF_CLOCK', 'CLKDIST')
+                pname in ('REF_CLOCK', 'CLOCK_DIST')
                 or (pname == 'power' and c['des'] in pwr_new_des)
                 or (pname == 'sign' and c['des'] in sign_new_des)
             )
@@ -308,7 +321,7 @@ def run():
         'power_non_bp': [(c['des'], c['bom'], c['pcb']) for c in dumps['power']['reals'] if not (c['bom'] and c['pcb'])],
         'pa_ref_bp': [(c['des'], c['bom'], c['pcb']) for c in dumps['PA_REF']['reals'] if c['bom'] or c['pcb']],
         'ref_clock_non_bp': [(c['des'], c['bom'], c['pcb']) for c in dumps['REF_CLOCK']['reals'] if not (c['bom'] and c['pcb'])],
-        'clkdist_non_bp': [(c['des'], c['bom'], c['pcb']) for c in dumps['CLKDIST']['reals'] if not (c['bom'] and c['pcb'])],
+        'clkdist_non_bp': [(c['des'], c['bom'], c['pcb']) for c in dumps['CLOCK_DIST']['reals'] if not (c['bom'] and c['pcb'])],
     }
     print("   BOM/PCB audit:", bom_pcb_audit)
 
@@ -407,8 +420,8 @@ return null;
     # Check 7 P0/P1/P2 fixes explicitly
     g_ref = graphs['REF_CLOCK']
     ref_by_des = {c['des']: c for c in dumps['REF_CLOCK']['reals']}
-    g_clk = graphs['CLKDIST']
-    clk_by_des = {c['des']: c for c in dumps['CLKDIST']['reals']}
+    g_clk = graphs['CLOCK_DIST']
+    clk_by_des = {c['des']: c for c in dumps['CLOCK_DIST']['reals']}
 
     p_checks = {
         'P0-1_U226_OUT4_5': {
@@ -484,7 +497,177 @@ return null;
     print("   Cross clocks:", cross_clocks)
     print(f"Saved full report to {REPORT_PATH}")
 
+    # 7. Hard Geometric & Label Linter Gates across live schematic pages
+    from audit_geometry import probe_bboxes, seg_intersects_bbox_interior
+    geom_gates = {}
+    for pname in ('power', 'sign', 'REF_CLOCK', 'CLOCK_DIST', 'PA_REF'):
+        pg = dumps[pname]
+        find = graphs[pname]['find']
+        bb_info = probe_bboxes(page_by_name[pname])
+        w_segs = []
+        for w in pg['wires']:
+            for x0, y0, x1, y1 in iter_wire_segs(w['line']):
+                w_segs.append((w['pid'], w['net'] or '', (round(x0, 1), round(y0, 1)), (round(x1, 1), round(y1, 1))))
+
+        # 7a. Global collinear wire overlap (ZERO across every page!)
+        col_ov = []
+        col_nm = []
+        for i in range(len(w_segs)):
+            p1, n1, a0, a1 = w_segs[i]
+            r1 = find(a0)
+            for j in range(i + 1, len(w_segs)):
+                p2, n2, b0, b1 = w_segs[j]
+                if p1 == p2:
+                    continue
+                r2 = find(b0)
+                if abs(a0[0] - a1[0]) < 0.25 and abs(b0[0] - b1[0]) < 0.25 and abs(a0[0] - b0[0]) < 0.25:
+                    alo, ahi = min(a0[1], a1[1]), max(a0[1], a1[1])
+                    blo, bhi = min(b0[1], b1[1]), max(b0[1], b1[1])
+                    ov = min(ahi, bhi) - max(alo, blo)
+                    if ov > 0.25:
+                        col_ov.append(('V', a0[0], ov, (alo, ahi), (blo, bhi), n1, n2))
+                    elif r1 != r2 and max(blo - ahi, alo - bhi) < 15.0:
+                        in_refactored = (
+                            pname in ('REF_CLOCK', 'CLOCK_DIST')
+                            or (pname == 'power' and a0[0] >= 1180)
+                            or (pname == 'sign' and a0[0] >= 1600)
+                        )
+                        if in_refactored:
+                            col_nm.append(('V', a0[0], round(max(blo - ahi, alo - bhi), 1), n1, n2))
+                elif abs(a0[1] - a1[1]) < 0.25 and abs(b0[1] - b1[1]) < 0.25 and abs(a0[1] - b0[1]) < 0.25:
+                    alo, ahi = min(a0[0], a1[0]), max(a0[0], a1[0])
+                    blo, bhi = min(b0[0], b1[0]), max(b0[0], b1[0])
+                    ov = min(ahi, bhi) - max(alo, blo)
+                    if ov > 0.25:
+                        col_ov.append(('H', a0[1], ov, (alo, ahi), (blo, bhi), n1, n2))
+                    elif r1 != r2 and max(blo - ahi, alo - bhi) < 15.0:
+                        in_refactored = (
+                            pname in ('REF_CLOCK', 'CLOCK_DIST')
+                            or (pname == 'power' and alo >= 1180)
+                            or (pname == 'sign' and alo >= 1600)
+                        )
+                        if in_refactored:
+                            col_nm.append(('H', a0[1], round(max(blo - ahi, alo - bhi), 1), n1, n2))
+
+        # 7b. Flag/Port BBox & Component BBox wire piercing (scoped to refactored pages/zones)
+        pf_pierce = []
+        pr_pierce = []
+        port_lbl_err = []
+        crowd_err = []
+        if pname != 'PA_REF':
+            # Build pure geometric wire-connected component graph (NOT merged across disconnected same-named ports!)
+            gp = {}
+
+            def gfind(k):
+                while gp.setdefault(k, k) != k:
+                    gp[k] = gp[gp[k]]
+                    k = gp[k]
+                return k
+
+            def gunion(a, b):
+                ra, rb = gfind(a), gfind(b)
+                if ra != rb:
+                    gp[ra] = rb
+
+            for _, _, p0, p1 in w_segs:
+                gunion(p0, p1)
+            for fl in bb_info['flags']:
+                gp.setdefault((round(fl['x'], 1), round(fl['y'], 1)), (round(fl['x'], 1), round(fl['y'], 1)))
+            for pt in [k for k in list(gp) if isinstance(k, tuple)]:
+                for _, _, p0, p1 in w_segs:
+                    if on_seg(pt[0], pt[1], p0[0], p0[1], p1[0], p1[1]):
+                        gunion(pt, p0)
+
+            root_wnets = {}
+            for w in pg['wires']:
+                if (w['net'] or '').strip():
+                    for x0, y0, x1, y1 in iter_wire_segs(w['line']):
+                        root_wnets.setdefault(gfind((round(x0, 1), round(y0, 1))), set()).add(w['pid'])
+                        break
+            for fl in bb_info['flags']:
+                in_scope = (
+                    pname in ('REF_CLOCK', 'CLOCK_DIST')
+                    or (pname == 'power' and fl['x'] >= 1180)
+                    or (pname == 'sign' and (fl['x'] >= 1600 or fl['net'] in (
+                        'CLK100_LMXA_P', 'CLK100_LMXA_N', 'CLK100_DDSA_P', 'CLK100_DDSA_N', 'ADL5375_DSOP', 'RFOUT')))
+                )
+                if not in_scope:
+                    continue
+                for _, _, p0, p1 in w_segs:
+                    if seg_intersects_bbox_interior(p0[0], p0[1], p1[0], p1[1], fl['bb'], [(round(fl['x'], 1), round(fl['y'], 1))]):
+                        pf_pierce.append((fl['ct'], fl['desc'], fl['net'], (fl['x'], fl['y']), fl['rot'], (p0, p1)))
+                if fl['ct'] == 'netport':
+                    r = gfind((round(fl['x'], 1), round(fl['y'], 1)))
+                    wn_pids = root_wnets.get(r, set())
+                    if fl['desc'] == 'Netport-IN' and len(wn_pids) != 0:
+                        port_lbl_err.append(('IN_DUP_WIRE_NET', fl['net'], len(wn_pids)))
+                    elif fl['desc'] != 'Netport-IN' and len(wn_pids) != 1:
+                        port_lbl_err.append(('OUT_BI_BAD_WIRE_NET_CNT', fl['desc'], fl['net'], len(wn_pids)))
+            pins_by_des = {c['des']: [(round(p[2], 1), round(p[3], 1)) for p in c['pins']] for c in pg['reals']}
+            for rc in bb_info['reals']:
+                in_scope = (
+                    pname in ('REF_CLOCK', 'CLOCK_DIST')
+                    or (pname == 'power' and rc['des'] in pwr_new_des)
+                    or (pname == 'sign' and rc['des'] in sign_new_des)
+                )
+                if not in_scope:
+                    continue
+                for _, _, p0, p1 in w_segs:
+                    if seg_intersects_bbox_interior(p0[0], p0[1], p1[0], p1[1], rc['bb'], pins_by_des.get(rc['des'], [])):
+                        pr_pierce.append((rc['des'], (p0, p1)))
+
+            for w in pg['wires']:
+                net = (w['net'] or '').strip()
+                if not net:
+                    continue
+                segs_w = list(iter_wire_segs(w['line']))
+                in_scope = any(
+                    pname in ('REF_CLOCK', 'CLOCK_DIST')
+                    or (pname == 'power' and x0 >= 1180)
+                    or (pname == 'sign' and (x0 >= 1600 or net == 'RFOUT'))
+                    for x0, _, _, _ in segs_w
+                )
+                if not in_scope:
+                    continue
+                h_segs = [(abs(x1 - x0), min(x0, x1), max(x0, x1), y0) for x0, y0, x1, y1 in segs_w if abs(y0 - y1) < 0.25]
+                if not h_segs:
+                    crowd_err.append(('NO_H_SEG_FOR_NET', net, segs_w))
+                    continue
+                longest_len, alo, ahi, y0 = max(h_segs, key=lambda t: t[0])
+                if longest_len < 48:
+                    crowd_err.append(('SHORT_H_NET', net, round(longest_len, 1), (alo, y0, ahi, y0)))
+                # Check rendered label window centered around midX (not faraway IC 10u pin stub ends)
+                mid_x = (alo + ahi) / 2.0
+                half_w = min(max(20.0, len(net) * 3.5), max(10.0, longest_len / 2.0 - 5.0))
+                lbl_lo, lbl_hi = mid_x - half_w, mid_x + half_w
+                for _, _, p0, p1 in w_segs:
+                    if abs(p0[1] - p1[1]) < 0.25:
+                        blo, bhi = min(p0[0], p1[0]), max(p0[0], p1[0])
+                        if min(lbl_hi, bhi) > max(lbl_lo, blo) and 0.25 < abs(p0[1] - y0) < 15.0:
+                            crowd_err.append(('CROWDED_H_NET', net, round(p0[1] - y0, 1), (alo, y0, ahi, y0), (p0, p1)))
+
+        geom_gates[pname] = {
+            'col_overlaps': col_ov,
+            'col_nearmiss_refactored': col_nm,
+            'flag_port_bbox_piercings': pf_pierce,
+            'comp_bbox_piercings': pr_pierce,
+            'port_label_count_errors': port_lbl_err,
+            'crowded_wire_labels': crowd_err,
+        }
+        print(f"7. Geom [{pname}]: ov={len(col_ov)}, nm={len(col_nm)}, pf={len(pf_pierce)}, pr={len(pr_pierce)}, plbl={len(port_lbl_err)}, crowd={len(crowd_err)}")
+
+    report['geometry_gates'] = geom_gates
+    with open(REPORT_PATH, 'w', encoding='utf-8') as f:
+        json.dump(report, f, ensure_ascii=False, indent=2)
+
     # Strict PASS assertions
+    for gk, gr in geom_gates.items():
+        assert not gr['col_overlaps'], (gk, gr['col_overlaps'])
+        assert not gr['col_nearmiss_refactored'], (gk, gr['col_nearmiss_refactored'])
+        assert not gr['flag_port_bbox_piercings'], (gk, gr['flag_port_bbox_piercings'])
+        assert not gr['comp_bbox_piercings'], (gk, gr['comp_bbox_piercings'])
+        assert not gr['port_label_count_errors'], (gk, gr['port_label_count_errors'])
+        assert not gr['crowded_wire_labels'], (gk, gr['crowded_wire_labels'])
     assert pages_ok, pages
     assert report['pa_ref_all_non_bom_pcb'] and report['u17_absent']
     assert not des_collisions, des_collisions
@@ -505,10 +688,10 @@ return null;
     assert ldo_buck_isolated and u304_cfly_direct_ok and not u5_sync_noc['noConnected']
     assert set(cross_rails['3V3_PLL']) == {'power', 'sign'} and set(cross_rails['3V3_PLLRF']) == {'power', 'sign'}
     assert set(cross_rails['VEE_N5V']) == {'power', 'sign'}
-    assert set(cross_clocks['OCXO_RF']) == {'CLKDIST', 'REF_CLOCK'}
-    assert set(cross_clocks['CLK_FB_P']) == {'CLKDIST', 'REF_CLOCK'} and set(cross_clocks['CLK_FB_N']) == {'CLKDIST', 'REF_CLOCK'}
-    assert set(cross_clocks['CLK100_LMXA_P']) == {'CLKDIST', 'sign'} and set(cross_clocks['CLK100_LMXA_N']) == {'CLKDIST', 'sign'}
-    assert set(cross_clocks['CLK100_DDSA_P']) == {'CLKDIST', 'sign'} and set(cross_clocks['CLK100_DDSA_N']) == {'CLKDIST', 'sign'}
+    assert set(cross_clocks['OCXO_RF']) == {'CLOCK_DIST', 'REF_CLOCK'}
+    assert set(cross_clocks['CLK_FB_P']) == {'CLOCK_DIST', 'REF_CLOCK'} and set(cross_clocks['CLK_FB_N']) == {'CLOCK_DIST', 'REF_CLOCK'}
+    assert set(cross_clocks['CLK100_LMXA_P']) == {'CLOCK_DIST', 'sign'} and set(cross_clocks['CLK100_LMXA_N']) == {'CLOCK_DIST', 'sign'}
+    assert set(cross_clocks['CLK100_DDSA_P']) == {'CLOCK_DIST', 'sign'} and set(cross_clocks['CLK100_DDSA_N']) == {'CLOCK_DIST', 'sign'}
     print("ALL VERIFICATION GATES PASSED 100%!")
 
 

@@ -15,11 +15,11 @@
     },
     {
       "name": "REF_CLOCK",
-      "uuid": "b5d13ea4cb40c13b"
+      "uuid": "f8559d41a9f54cfd"
     },
     {
-      "name": "CLKDIST",
-      "uuid": "3744c31091f14e5f"
+      "name": "CLOCK_DIST",
+      "uuid": "9a6456f9018af3a5"
     }
   ],
   "pa_ref_all_non_bom_pcb": true,
@@ -70,13 +70,13 @@
           "C17",
           "1",
           "1",
-          0.049
+          0.051
         ],
         [
           "C17",
           "2",
           "2",
-          0.049
+          0.051
         ],
         [
           "C18",
@@ -158,7 +158,7 @@
       "case_diffs": [],
       "floating_strict": []
     },
-    "CLKDIST": {
+    "CLOCK_DIST": {
       "offgrid_all": [],
       "offgrid_real": [],
       "shorts_upper": [],
@@ -179,41 +179,29 @@
       "bad_passive_names": [],
       "netports": [
         "ADF_CE",
-        "ADF_LE",
         "ADL5375_DSOP",
         "AM_DAC_CS",
         "AM_DAC_DIN",
         "AM_DAC_SCLK",
-        "CE",
         "CLK100_DDSA_N",
         "CLK100_DDSA_P",
         "CLK100_LMXA_N",
         "CLK100_LMXA_P",
         "CSB",
-        "CS_DDS",
         "DAC_SYNC_N",
-        "DDSIO_0",
         "DDSIO_1",
         "DDSIO_2",
-        "DDSIO_3",
         "DDS_P0",
-        "DDS_P1",
         "DDS_P2",
         "DDS_P3",
         "DDS_SCLK",
         "DDS_SYNC_clk",
-        "EXTREF_DET",
         "IOupdate",
         "MUXout",
         "PLL_SCK",
-        "PLL_SDI",
         "REF_LOCK",
-        "REF_SEL",
         "RFOUT",
-        "SPI_REF_MOSI",
-        "SPI_REF_SCK",
-        "VC_MON",
-        "dds_rst"
+        "SPI_REF_MOSI"
       ]
     },
     "REF_CLOCK": {
@@ -236,7 +224,7 @@
         "VC_MON"
       ]
     },
-    "CLKDIST": {
+    "CLOCK_DIST": {
       "bad_flag_rots": [],
       "bad_pwr_wire_nets": [],
       "bad_passive_names": [],
@@ -384,12 +372,8 @@
   "r309": {
     "2": {
       "name": "2",
-      "exact": [
-        "DDS_SYNC_IN"
-      ],
-      "upper": [
-        "DDS_SYNC_IN"
-      ]
+      "exact": [],
+      "upper": []
     },
     "1": {
       "name": "1",
@@ -479,12 +463,8 @@
     "u301": {
       "1": {
         "name": "RF1",
-        "exact": [
-          "VVA_RFIN"
-        ],
-        "upper": [
-          "VVA_RFIN"
-        ]
+        "exact": [],
+        "upper": []
       },
       "2": {
         "name": "GND",
@@ -538,12 +518,8 @@
       },
       "8": {
         "name": "RF2",
-        "exact": [
-          "VVA_RFOUT"
-        ],
-        "upper": [
-          "VVA_RFOUT"
-        ]
+        "exact": [],
+        "upper": []
       },
       "9": {
         "name": "EP",
@@ -567,23 +543,15 @@
       },
       "2": {
         "name": "2",
-        "exact": [
-          "VVA_RFIN"
-        ],
-        "upper": [
-          "VVA_RFIN"
-        ]
+        "exact": [],
+        "upper": []
       }
     },
     "c312": {
       "1": {
         "name": "1",
-        "exact": [
-          "VVA_RFOUT"
-        ],
-        "upper": [
-          "VVA_RFOUT"
-        ]
+        "exact": [],
+        "upper": []
       },
       "2": {
         "name": "2",
@@ -648,8 +616,7 @@
       "power"
     ],
     "VCC_5V": [
-      "power",
-      "sign"
+      "power"
     ],
     "5VOSC": [
       "REF_CLOCK",
@@ -661,7 +628,7 @@
       "sign"
     ],
     "3V3_REF": [
-      "CLKDIST",
+      "CLOCK_DIST",
       "REF_CLOCK",
       "power",
       "sign"
@@ -685,61 +652,61 @@
       "sign"
     ],
     "3V3_U225": [
-      "CLKDIST"
+      "CLOCK_DIST"
     ],
     "3V3_U226": [
-      "CLKDIST"
+      "CLOCK_DIST"
     ],
     "3V3_DIV": [
-      "CLKDIST"
+      "CLOCK_DIST"
     ]
   },
   "cross_clocks": {
     "OCXO_RF": [
-      "CLKDIST",
+      "CLOCK_DIST",
       "REF_CLOCK"
     ],
     "CLK_FB_P": [
-      "CLKDIST",
+      "CLOCK_DIST",
       "REF_CLOCK"
     ],
     "CLK_FB_N": [
-      "CLKDIST",
+      "CLOCK_DIST",
       "REF_CLOCK"
     ],
     "CLK100_LMXA_P": [
-      "CLKDIST",
+      "CLOCK_DIST",
       "sign"
     ],
     "CLK100_LMXA_N": [
-      "CLKDIST",
+      "CLOCK_DIST",
       "sign"
     ],
     "CLK100_DDSA_P": [
-      "CLKDIST",
+      "CLOCK_DIST",
       "sign"
     ],
     "CLK100_DDSA_N": [
-      "CLKDIST",
+      "CLOCK_DIST",
       "sign"
     ],
     "CLK100_DIV_P": [
-      "CLKDIST"
+      "CLOCK_DIST"
     ],
     "CLK100_DIV_N": [
-      "CLKDIST"
+      "CLOCK_DIST"
     ],
     "CLK100_LMXB_P": [
-      "CLKDIST"
+      "CLOCK_DIST"
     ],
     "CLK100_LMXB_N": [
-      "CLKDIST"
+      "CLOCK_DIST"
     ],
     "CLK100_DDSB_P": [
-      "CLKDIST"
+      "CLOCK_DIST"
     ],
     "CLK100_DDSB_N": [
-      "CLKDIST"
+      "CLOCK_DIST"
     ]
   },
   "h1_40pin_closure": [
@@ -752,11 +719,11 @@
         "GND"
       ],
       "connected_pages": [
-        "sign(99pins)",
+        "sign(91pins)",
         "power",
         "PA_REF",
         "REF_CLOCK",
-        "CLKDIST"
+        "CLOCK_DIST"
       ]
     },
     {
@@ -829,11 +796,11 @@
         "GND"
       ],
       "connected_pages": [
-        "sign(99pins)",
+        "sign(91pins)",
         "power",
         "PA_REF",
         "REF_CLOCK",
-        "CLKDIST"
+        "CLOCK_DIST"
       ]
     },
     {
@@ -906,11 +873,11 @@
         "GND"
       ],
       "connected_pages": [
-        "sign(99pins)",
+        "sign(91pins)",
         "power",
         "PA_REF",
         "REF_CLOCK",
-        "CLKDIST"
+        "CLOCK_DIST"
       ]
     },
     {
@@ -982,11 +949,11 @@
         "GND"
       ],
       "connected_pages": [
-        "sign(99pins)",
+        "sign(91pins)",
         "power",
         "PA_REF",
         "REF_CLOCK",
-        "CLKDIST"
+        "CLOCK_DIST"
       ]
     },
     {
@@ -1036,11 +1003,11 @@
         "GND"
       ],
       "connected_pages": [
-        "sign(99pins)",
+        "sign(91pins)",
         "power",
         "PA_REF",
         "REF_CLOCK",
-        "CLKDIST"
+        "CLOCK_DIST"
       ]
     },
     {
@@ -1100,11 +1067,11 @@
         "GND"
       ],
       "connected_pages": [
-        "sign(99pins)",
+        "sign(91pins)",
         "power",
         "PA_REF",
         "REF_CLOCK",
-        "CLKDIST"
+        "CLOCK_DIST"
       ]
     },
     {
@@ -1164,11 +1131,11 @@
         "GND"
       ],
       "connected_pages": [
-        "sign(99pins)",
+        "sign(91pins)",
         "power",
         "PA_REF",
         "REF_CLOCK",
-        "CLKDIST"
+        "CLOCK_DIST"
       ]
     },
     {
@@ -1228,11 +1195,11 @@
         "GND"
       ],
       "connected_pages": [
-        "sign(99pins)",
+        "sign(91pins)",
         "power",
         "PA_REF",
         "REF_CLOCK",
-        "CLKDIST"
+        "CLOCK_DIST"
       ]
     },
     {
@@ -1256,11 +1223,11 @@
         "GND"
       ],
       "connected_pages": [
-        "sign(99pins)",
+        "sign(91pins)",
         "power",
         "PA_REF",
         "REF_CLOCK",
-        "CLKDIST"
+        "CLOCK_DIST"
       ]
     }
   ],
@@ -1422,21 +1389,13 @@
       },
       "U233_A": {
         "name": "A",
-        "exact": [
-          "U228_TC"
-        ],
-        "upper": [
-          "U228_TC"
-        ]
+        "exact": [],
+        "upper": []
       },
       "U233_Y": {
         "name": "Y",
-        "exact": [
-          "U228_LOAD_N"
-        ],
-        "upper": [
-          "U228_LOAD_N"
-        ]
+        "exact": [],
+        "upper": []
       }
     },
     "P1-3_U234_REF_SEL": {
@@ -1469,12 +1428,8 @@
       },
       "4": {
         "name": "Y",
-        "exact": [
-          "REF_SEL_5V"
-        ],
-        "upper": [
-          "REF_SEL_5V"
-        ]
+        "exact": [],
+        "upper": []
       },
       "5": {
         "name": "VCC",
@@ -1645,6 +1600,48 @@
           ]
         }
       }
+    }
+  },
+  "geometry_gates": {
+    "power": {
+      "col_overlaps": [],
+      "col_nearmiss_refactored": [],
+      "flag_port_bbox_piercings": [],
+      "comp_bbox_piercings": [],
+      "port_label_count_errors": [],
+      "crowded_wire_labels": []
+    },
+    "sign": {
+      "col_overlaps": [],
+      "col_nearmiss_refactored": [],
+      "flag_port_bbox_piercings": [],
+      "comp_bbox_piercings": [],
+      "port_label_count_errors": [],
+      "crowded_wire_labels": []
+    },
+    "REF_CLOCK": {
+      "col_overlaps": [],
+      "col_nearmiss_refactored": [],
+      "flag_port_bbox_piercings": [],
+      "comp_bbox_piercings": [],
+      "port_label_count_errors": [],
+      "crowded_wire_labels": []
+    },
+    "CLOCK_DIST": {
+      "col_overlaps": [],
+      "col_nearmiss_refactored": [],
+      "flag_port_bbox_piercings": [],
+      "comp_bbox_piercings": [],
+      "port_label_count_errors": [],
+      "crowded_wire_labels": []
+    },
+    "PA_REF": {
+      "col_overlaps": [],
+      "col_nearmiss_refactored": [],
+      "flag_port_bbox_piercings": [],
+      "comp_bbox_piercings": [],
+      "port_label_count_errors": [],
+      "crowded_wire_labels": []
     }
   }
 }

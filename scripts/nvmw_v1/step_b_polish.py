@@ -143,11 +143,16 @@ return {
             updates.append(it)
 
     print(f"Deleting wires={len(del_wire_pids)}, flags={len(del_flag_pids)}, rects={len(del_rect_pids)}, texts={len(del_text_pids)}; updating {len(updates)} comps...")
-    js(open_page(POWER_PAGE_UUID, 500) + f"""
-for (const id of {json.dumps(del_wire_pids)}) await eda.sch_PrimitiveWire.delete(id);
-for (const id of {json.dumps(del_flag_pids)}) await eda.sch_PrimitiveComponent.delete(id);
-for (const id of {json.dumps(del_rect_pids)}) await eda.sch_PrimitiveRectangle.delete(id);
-for (const id of {json.dumps(del_text_pids)}) await eda.sch_PrimitiveText.delete(id);
+    js(open_page(POWER_PAGE_UUID, 900) + "return 1;")
+    for i in range(0, len(del_wire_pids), 10):
+        js(f"for (const id of {json.dumps(del_wire_pids[i:i+10])}) {{ const x = await eda.sch_PrimitiveWire.get(id); if (x) {{ await Promise.race([eda.sch_PrimitiveWire.delete(id), new Promise(r=>setTimeout(r,1500))]); await new Promise(r=>setTimeout(r,25)); }} }} return 1;", timeout=45)
+    for i in range(0, len(del_flag_pids), 10):
+        js(f"for (const id of {json.dumps(del_flag_pids[i:i+10])}) {{ const x = await eda.sch_PrimitiveComponent.get(id); if (x) {{ await Promise.race([eda.sch_PrimitiveComponent.delete(id), new Promise(r=>setTimeout(r,1500))]); await new Promise(r=>setTimeout(r,25)); }} }} return 1;", timeout=45)
+    for i in range(0, len(del_rect_pids), 10):
+        js(f"for (const id of {json.dumps(del_rect_pids[i:i+10])}) {{ const x = await eda.sch_PrimitiveRectangle.get(id); if (x) {{ await Promise.race([eda.sch_PrimitiveRectangle.delete(id), new Promise(r=>setTimeout(r,1500))]); await new Promise(r=>setTimeout(r,25)); }} }} return 1;", timeout=45)
+    for i in range(0, len(del_text_pids), 10):
+        js(f"for (const id of {json.dumps(del_text_pids[i:i+10])}) {{ const x = await eda.sch_PrimitiveText.get(id); if (x) {{ await Promise.race([eda.sch_PrimitiveText.delete(id), new Promise(r=>setTimeout(r,1500))]); await new Promise(r=>setTimeout(r,25)); }} }} return 1;", timeout=45)
+    js(f"""
 for (const u of {json.dumps(updates)}) {{
   const c = await eda.sch_PrimitiveComponent.get(u.pid);
   if (!c) continue;
@@ -198,6 +203,7 @@ return 1;
     u305_out = pxy('U305', 'OUT')
 
     # Full direct orthogonal polylines (pass null net for all Power & GND wires -> zero double labels!)
+    # Shift GND bus lower to 35+DY (y=155) & GND flags to 15+DY (y=135) so red dot & bus NEVER touch TPS60403DBVR value text!
     flags = [
         # R10 & R13 vertical Power rot=0 pointing UP
         ('Power', '3V3_PLL_LDO', 200, 760, 0),
@@ -205,11 +211,11 @@ return 1;
         # U304 block: VCC_5V UP (rot=0), VEE_N5V UP (rot=0), GND DOWN (rot=0)
         ('Power', 'VCC_5V', c321_t[0], 155 + DY, 0),
         ('Power', 'VEE_N5V', c323_t[0], 155 + DY, 0),
-        ('Ground', 'GND', 670 + DX, 45 + DY, 0),
+        ('Ground', 'GND', 670 + DX, 15 + DY, 0),
         # U305 block: VCC_5V UP (rot=0), 3V3_PLL_LDO UP (rot=0), GND DOWN (rot=0)
         ('Power', 'VCC_5V', c324_t[0], 155 + DY, 0),
         ('Power', '3V3_PLL_LDO', c325_t[0], 155 + DY, 0),
-        ('Ground', 'GND', 970 + DX, 45 + DY, 0),
+        ('Ground', 'GND', 970 + DX, 15 + DY, 0),
     ]
 
     # Note: EasyEDA create(poly, null) accepts continuous multi-point orthogonal polylines cleanly
@@ -226,34 +232,34 @@ return 1;
         # U304 VEE_N5V bus & C323
         ([c323_t[0], 155 + DY, c323_t[0], c323_t[1]], None),
         ([u304_out[0], u304_out[1], c323_t[0], u304_out[1]], None),
-        # U304 GND bus (explicit non-collinear branches meeting at (670+DX, 60+DY) -> GND@670+DX,45+DY)
-        ([c321_b[0], c321_b[1], c321_b[0], 60 + DY, 670 + DX, 60 + DY], None),
-        ([c323_b[0], c323_b[1], c323_b[0], 60 + DY, 670 + DX, 60 + DY], None),
-        ([u304_gnd[0], u304_gnd[1], 670 + DX, 60 + DY], None),
-        ([670 + DX, 60 + DY, 670 + DX, 45 + DY], None),
+        # U304 GND bus (explicit non-collinear branches meeting at (670+DX, 35+DY) -> GND@670+DX,15+DY)
+        ([c321_b[0], c321_b[1], c321_b[0], 35 + DY, 670 + DX, 35 + DY], None),
+        ([c323_b[0], c323_b[1], c323_b[0], 35 + DY, 670 + DX, 35 + DY], None),
+        ([u304_gnd[0], u304_gnd[1], 670 + DX, 65 + DY, 725 + DX, 65 + DY, 725 + DX, 35 + DY], None),
+        ([670 + DX, 35 + DY, 670 + DX, 15 + DY], None),
 
-        # U305 VCC_5V bus & C324 (orthogonal cross at (915+DX, 110+DY) has no vertex)
+        # U305 VCC_5V bus & C324 (u305_in bends at 905+DX, 10u separate from u305_gnd at 915+DX!)
         ([c324_t[0], 155 + DY, c324_t[0], c324_t[1]], None),
-        ([c324_t[0], 140 + DY, 915 + DX, 140 + DY, 915 + DX, u305_in[1], u305_in[0], u305_in[1]], None),
+        ([c324_t[0], 140 + DY, 905 + DX, 140 + DY, 905 + DX, u305_in[1], u305_in[0], u305_in[1]], None),
         ([895 + DX, 140 + DY, 895 + DX, u305_en[1], u305_en[0], u305_en[1]], None),
-        # U305 GND bus (shared C324, U305.GND, C325 -> GND@970+DX,45+DY)
-        ([c324_b[0], c324_b[1], c324_b[0], 60 + DY, c325_b[0], 60 + DY, c325_b[0], c325_b[1]], None),
-        ([u305_gnd[0], u305_gnd[1], 915 + DX, u305_gnd[1], 915 + DX, 60 + DY], None),
-        ([970 + DX, 60 + DY, 970 + DX, 45 + DY], None),
+        # U305 GND bus (shared C324, U305.GND, C325 -> GND@970+DX,15+DY)
+        ([c324_b[0], c324_b[1], c324_b[0], 35 + DY, c325_b[0], 35 + DY, c325_b[0], c325_b[1]], None),
+        ([u305_gnd[0], u305_gnd[1], 915 + DX, u305_gnd[1], 915 + DX, 35 + DY], None),
+        ([970 + DX, 35 + DY, 970 + DX, 15 + DY], None),
         # U305 3V3_PLL_LDO bus & C325
         ([c325_t[0], 155 + DY, c325_t[0], c325_t[1]], None),
         ([u305_out[0], u305_out[1], 1025 + DX, u305_out[1], 1025 + DX, 140 + DY, c325_t[0], 140 + DY], None),
     ]
 
-    js(open_page(POWER_PAGE_UUID, 400) + f"""
+    js(f"""
 for (const [kind, net, x, y, rot] of {json.dumps(flags)}) {{
   await eda.sch_PrimitiveComponent.createNetFlag(kind, net, x, y, rot, false);
 }}
 for (const [line, net] of {json.dumps(wires)}) {{
   await (net ? eda.sch_PrimitiveWire.create(line, net) : eda.sch_PrimitiveWire.create(line));
 }}
-await eda.sch_PrimitiveRectangle.create({495 + DX}, {200 + DY}, 625, 175, 0, 0, '#000000', 'none', 1, null, null);
-await eda.sch_PrimitiveText.create({510 + DX}, {185 + DY}, '新增模拟负压 (-5V U304) 与 LMX2595 专用线性 LDO (1A U305 3V3_PLL_LDO)', 0, '#000000', null, 12, true, false, false, 1);
+await eda.sch_PrimitiveRectangle.create({495 + DX}, {235 + DY}, 625, 245, 0, 0, '#000000', 'none', 1, null, null);
+await eda.sch_PrimitiveText.create({510 + DX}, {220 + DY}, '新增模拟负压 (-5V U304) 与 LMX2595 专用线性 LDO (1A U305 3V3_PLL_LDO)', 0, '#000000', null, 12, true, false, false, 1);
 await new Promise(r => setTimeout(r, 250));
 await eda.sch_Document.save();
 await new Promise(r => setTimeout(r, 600));
