@@ -94,7 +94,7 @@ def run():
     def should_del_flag(f):
         if f.get('ct') == 'sheet':
             return False
-        return f['x'] >= 1520 or f.get('net') in temp_nets or (f.get('net') == 'GND' and abs(f['x'] - 270) < 2 and abs(f['y'] - 500) < 6)
+        return (f['x'] >= 1700 or (f['x'] >= 1520 and f['y'] >= 780)) or f.get('net') in temp_nets or (f.get('net') == 'GND' and abs(f['x'] - 270) < 2 and abs(f['y'] - 500) < 6)
 
     del_flag_pids = [f['pid'] for f in pg['flags'] if should_del_flag(f)]
 
@@ -111,7 +111,7 @@ def run():
         in_pll_lvds = (mnx >= 390 and mxx <= 495 and mny >= -95 and mxy <= 140)
         in_iq_dsop = (mnx >= 1313 and mxx <= 1377 and mny >= 353 and mxy <= 357)
         in_iq_rfout = (mnx >= 1483 and mxx <= 1627 and mny >= 183 and mxy <= 277 and mny <= 190)
-        return mxx >= 1520 or w.get('net') in temp_nets or in_r309 or in_dds_lvds or in_pll_lvds or in_iq_dsop or in_iq_rfout
+        return (mxx >= 1700 or (mxx >= 1520 and mxy >= 780)) or w.get('net') in temp_nets or in_r309 or in_dds_lvds or in_pll_lvds or in_iq_dsop or in_iq_rfout
 
     del_wire_pids = [w['pid'] for w in pg['wires'] if should_del_wire(w)]
 
@@ -119,12 +119,12 @@ def run():
 const rs = (await eda.sch_PrimitiveRectangle.getAll()) || [];
 const ts = (await eda.sch_PrimitiveText.getAll()) || [];
 return {
-  rects: rs.map(r => ({pid: r.getState_PrimitiveId(), x: r.getState_TopLeftX()})),
-  texts: ts.map(t => ({pid: t.getState_PrimitiveId(), x: t.getState_X()}))
+  rects: rs.map(r => ({pid: r.getState_PrimitiveId(), x: r.getState_TopLeftX(), y: r.getState_TopLeftY()})),
+  texts: ts.map(t => ({pid: t.getState_PrimitiveId(), x: t.getState_X(), y: t.getState_Y()}))
 };
 """)
-    del_rect_pids = [r['pid'] for r in meta['rects'] if r['x'] >= 1520]
-    del_text_pids = [t['pid'] for t in meta['texts'] if t['x'] >= 1520]
+    del_rect_pids = [r['pid'] for r in meta['rects'] if r['x'] >= 1700 or (r['x'] >= 1520 and r['y'] >= 780)]
+    del_text_pids = [t['pid'] for t in meta['texts'] if t['x'] >= 1700 or (t['x'] >= 1520 and t['y'] >= 780)]
 
     # 2. Simplify display names & reposition AM VVA left-to-right + H1
     clean_names = {
@@ -327,8 +327,8 @@ return 1;
     # U14.1 DSOP (left IN rot=0, wire net=None) & U14.16 RFOUT (routed cleanly at y=185 clear of x=1525 & C120!)
     wires.append(([1315, 355, 1375, 355], None))
     ports.append(('IN', 'BI', 'ADL5375_DSOP', 1315, 355, 0))
-    wires.append(([1485, 275, 1505, 275, 1505, 185], None))
-    wires.append(([1505, 185, 1625, 185], 'RFOUT'))
+    wires.append(([1485, 275, 1510, 275, 1510, 185], None))
+    wires.append(([1510, 185, 1625, 185], 'RFOUT'))
     ports.append(('OUT', 'BI', 'RFOUT', 1625, 185, 0))
 
     # --- B. Analog AM VVA Left-to-Right Signal Flow ---

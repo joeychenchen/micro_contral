@@ -616,7 +616,8 @@
       "power"
     ],
     "VCC_5V": [
-      "power"
+      "power",
+      "sign"
     ],
     "5VOSC": [
       "REF_CLOCK",
@@ -719,7 +720,7 @@
         "GND"
       ],
       "connected_pages": [
-        "sign(91pins)",
+        "sign(99pins)",
         "power",
         "PA_REF",
         "REF_CLOCK",
@@ -796,7 +797,7 @@
         "GND"
       ],
       "connected_pages": [
-        "sign(91pins)",
+        "sign(99pins)",
         "power",
         "PA_REF",
         "REF_CLOCK",
@@ -873,7 +874,7 @@
         "GND"
       ],
       "connected_pages": [
-        "sign(91pins)",
+        "sign(99pins)",
         "power",
         "PA_REF",
         "REF_CLOCK",
@@ -949,7 +950,7 @@
         "GND"
       ],
       "connected_pages": [
-        "sign(91pins)",
+        "sign(99pins)",
         "power",
         "PA_REF",
         "REF_CLOCK",
@@ -1003,7 +1004,7 @@
         "GND"
       ],
       "connected_pages": [
-        "sign(91pins)",
+        "sign(99pins)",
         "power",
         "PA_REF",
         "REF_CLOCK",
@@ -1067,7 +1068,7 @@
         "GND"
       ],
       "connected_pages": [
-        "sign(91pins)",
+        "sign(99pins)",
         "power",
         "PA_REF",
         "REF_CLOCK",
@@ -1131,7 +1132,7 @@
         "GND"
       ],
       "connected_pages": [
-        "sign(91pins)",
+        "sign(99pins)",
         "power",
         "PA_REF",
         "REF_CLOCK",
@@ -1195,7 +1196,7 @@
         "GND"
       ],
       "connected_pages": [
-        "sign(91pins)",
+        "sign(99pins)",
         "power",
         "PA_REF",
         "REF_CLOCK",
@@ -1223,7 +1224,7 @@
         "GND"
       ],
       "connected_pages": [
-        "sign(91pins)",
+        "sign(99pins)",
         "power",
         "PA_REF",
         "REF_CLOCK",
@@ -1625,7 +1626,201 @@
       "flag_port_bbox_piercings": [],
       "comp_bbox_piercings": [],
       "port_label_count_errors": [],
-      "crowded_wire_labels": []
+      "crowded_wire_labels": [
+        [
+          "SHORT_H_NET",
+          "EXTREF_DET",
+          20,
+          [
+            3225,
+            1470,
+            3245,
+            1470
+          ]
+        ],
+        [
+          "CROWDED_H_NET",
+          "EXTREF_DET",
+          10,
+          [
+            3225,
+            1470,
+            3245,
+            1470
+          ],
+          [
+            [
+              3230,
+              1480
+            ],
+            [
+              3245,
+              1480
+            ]
+          ]
+        ],
+        [
+          "SHORT_H_NET",
+          "DAC_VOUT",
+          30,
+          [
+            3820,
+            1040,
+            3850,
+            1040
+          ]
+        ],
+        [
+          "CROWDED_H_NET",
+          "DAC_VOUT",
+          10,
+          [
+            3820,
+            1040,
+            3850,
+            1040
+          ],
+          [
+            [
+              3715,
+              1050
+            ],
+            [
+              3850,
+              1050
+            ]
+          ]
+        ],
+        [
+          "CROWDED_H_NET",
+          "DAC_VOUT",
+          -10,
+          [
+            3820,
+            1040,
+            3850,
+            1040
+          ],
+          [
+            [
+              3850,
+              1030
+            ],
+            [
+              3820,
+              1030
+            ]
+          ]
+        ],
+        [
+          "SHORT_H_NET",
+          "VC_MON",
+          25,
+          [
+            5105,
+            1430,
+            5130,
+            1430
+          ]
+        ],
+        [
+          "CROWDED_H_NET",
+          "OCXO_VC",
+          -10,
+          [
+            5385,
+            1495,
+            5475,
+            1495
+          ],
+          [
+            [
+              5475,
+              1485
+            ],
+            [
+              5435,
+              1485
+            ]
+          ]
+        ],
+        [
+          "NO_H_SEG_FOR_NET",
+          "DAC_VC",
+          [
+            [
+              3820,
+              950,
+              3820,
+              935.0
+            ]
+          ]
+        ],
+        [
+          "SHORT_H_NET",
+          "DAC_VC",
+          25,
+          [
+            4645,
+            1485,
+            4670,
+            1485
+          ]
+        ],
+        [
+          "CROWDED_H_NET",
+          "DAC_VC",
+          10,
+          [
+            4645,
+            1485,
+            4670,
+            1485
+          ],
+          [
+            [
+              4595,
+              1495
+            ],
+            [
+              4670,
+              1495
+            ]
+          ]
+        ],
+        [
+          "SHORT_H_NET",
+          "LF_OUT",
+          25,
+          [
+            4645,
+            1505,
+            4670,
+            1505
+          ]
+        ],
+        [
+          "CROWDED_H_NET",
+          "LF_OUT",
+          -10,
+          [
+            4645,
+            1505,
+            4670,
+            1505
+          ],
+          [
+            [
+              4595,
+              1495
+            ],
+            [
+              4670,
+              1495
+            ]
+          ]
+        ]
+      ]
     },
     "CLOCK_DIST": {
       "col_overlaps": [],
