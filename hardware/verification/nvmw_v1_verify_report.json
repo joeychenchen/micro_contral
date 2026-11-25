@@ -1,0 +1,1650 @@
+{
+  "pages_ok": true,
+  "pages": [
+    {
+      "name": "sign",
+      "uuid": "46bb8782cca161a7"
+    },
+    {
+      "name": "power",
+      "uuid": "8e5dfe344ace822c"
+    },
+    {
+      "name": "PA_REF",
+      "uuid": "fb73bcdb610f234c"
+    },
+    {
+      "name": "REF_CLOCK",
+      "uuid": "b5d13ea4cb40c13b"
+    },
+    {
+      "name": "CLKDIST",
+      "uuid": "3744c31091f14e5f"
+    }
+  ],
+  "pa_ref_all_non_bom_pcb": true,
+  "u17_absent": true,
+  "designator_collisions": {},
+  "legacy_nets_found": [],
+  "legacy_des_found": [],
+  "per_page": {
+    "sign": {
+      "offgrid_all": [
+        [
+          "C11",
+          "1",
+          "1",
+          0.027
+        ],
+        [
+          "C11",
+          "2",
+          "2",
+          0.027
+        ],
+        [
+          "C14",
+          "1",
+          "1",
+          0.025
+        ],
+        [
+          "C14",
+          "2",
+          "2",
+          0.025
+        ],
+        [
+          "C15",
+          "1",
+          "1",
+          0.022
+        ],
+        [
+          "C15",
+          "2",
+          "2",
+          0.022
+        ],
+        [
+          "C17",
+          "1",
+          "1",
+          0.049
+        ],
+        [
+          "C17",
+          "2",
+          "2",
+          0.049
+        ],
+        [
+          "C18",
+          "1",
+          "1",
+          0.031
+        ],
+        [
+          "C18",
+          "2",
+          "2",
+          0.024
+        ],
+        [
+          "C19",
+          "1",
+          "1",
+          0.031
+        ],
+        [
+          "C19",
+          "2",
+          "2",
+          0.03
+        ],
+        [
+          "C20",
+          "1",
+          "1",
+          0.031
+        ],
+        [
+          "C20",
+          "2",
+          "2",
+          0.031
+        ]
+      ],
+      "offgrid_real": [],
+      "shorts_upper": [],
+      "case_diffs": [
+        [
+          "MUXOUT",
+          "MUXout"
+        ],
+        [
+          "DDS_RST",
+          "dds_rst"
+        ],
+        [
+          "DDS_SYNC_CLK",
+          "DDS_SYNC_clk"
+        ],
+        [
+          "IOUPDATE",
+          "IOupdate"
+        ]
+      ],
+      "floating_strict": []
+    },
+    "power": {
+      "offgrid_all": [],
+      "offgrid_real": [],
+      "shorts_upper": [],
+      "case_diffs": [],
+      "floating_strict": []
+    },
+    "PA_REF": {
+      "offgrid_all": [],
+      "offgrid_real": [],
+      "shorts_upper": [],
+      "case_diffs": [],
+      "floating_strict": []
+    },
+    "REF_CLOCK": {
+      "offgrid_all": [],
+      "offgrid_real": [],
+      "shorts_upper": [],
+      "case_diffs": [],
+      "floating_strict": []
+    },
+    "CLKDIST": {
+      "offgrid_all": [],
+      "offgrid_real": [],
+      "shorts_upper": [],
+      "case_diffs": [],
+      "floating_strict": []
+    }
+  },
+  "style": {
+    "power": {
+      "bad_flag_rots": [],
+      "bad_pwr_wire_nets": [],
+      "bad_passive_names": [],
+      "netports": []
+    },
+    "sign": {
+      "bad_flag_rots": [],
+      "bad_pwr_wire_nets": [],
+      "bad_passive_names": [],
+      "netports": [
+        "ADF_CE",
+        "ADF_LE",
+        "ADL5375_DSOP",
+        "AM_DAC_CS",
+        "AM_DAC_DIN",
+        "AM_DAC_SCLK",
+        "CE",
+        "CLK100_DDSA_N",
+        "CLK100_DDSA_P",
+        "CLK100_LMXA_N",
+        "CLK100_LMXA_P",
+        "CSB",
+        "CS_DDS",
+        "DAC_SYNC_N",
+        "DDSIO_0",
+        "DDSIO_1",
+        "DDSIO_2",
+        "DDSIO_3",
+        "DDS_P0",
+        "DDS_P1",
+        "DDS_P2",
+        "DDS_P3",
+        "DDS_SCLK",
+        "DDS_SYNC_clk",
+        "EXTREF_DET",
+        "IOupdate",
+        "MUXout",
+        "PLL_SCK",
+        "PLL_SDI",
+        "REF_LOCK",
+        "REF_SEL",
+        "RFOUT",
+        "SPI_REF_MOSI",
+        "SPI_REF_SCK",
+        "VC_MON",
+        "dds_rst"
+      ]
+    },
+    "REF_CLOCK": {
+      "bad_flag_rots": [],
+      "bad_pwr_wire_nets": [],
+      "bad_passive_names": [],
+      "netports": [
+        "ADF_CE",
+        "ADF_LE",
+        "CLK_FB_N",
+        "CLK_FB_P",
+        "DAC_SYNC_N",
+        "EXTREF_DET",
+        "OCXO_RF",
+        "OCXO_VREF",
+        "REF_LOCK",
+        "REF_SEL",
+        "SPI_REF_MOSI",
+        "SPI_REF_SCK",
+        "VC_MON"
+      ]
+    },
+    "CLKDIST": {
+      "bad_flag_rots": [],
+      "bad_pwr_wire_nets": [],
+      "bad_passive_names": [],
+      "netports": [
+        "CLK100_DDSA_N",
+        "CLK100_DDSA_P",
+        "CLK100_DDSB_N",
+        "CLK100_DDSB_P",
+        "CLK100_LMXA_N",
+        "CLK100_LMXA_P",
+        "CLK100_LMXB_N",
+        "CLK100_LMXB_P",
+        "CLK_FB_N",
+        "CLK_FB_P",
+        "OCXO_RF"
+      ]
+    }
+  },
+  "bom_pcb_audit": {
+    "sign_non_bp": [],
+    "power_non_bp": [
+      [
+        "TP3",
+        false,
+        true
+      ]
+    ],
+    "pa_ref_bp": [],
+    "ref_clock_non_bp": [
+      [
+        "R239",
+        false,
+        true
+      ]
+    ],
+    "clkdist_non_bp": [
+      [
+        "C260",
+        false,
+        true
+      ]
+    ]
+  },
+  "power_3v3_pll_ldo_isolated_from_buck": true,
+  "u304_cfly_direct_ok": true,
+  "u304": {
+    "1": {
+      "name": "OUT",
+      "exact": [
+        "VEE_N5V"
+      ],
+      "upper": [
+        "VEE_N5V"
+      ]
+    },
+    "2": {
+      "name": "IN",
+      "exact": [
+        "VCC_5V"
+      ],
+      "upper": [
+        "VCC_5V"
+      ]
+    },
+    "3": {
+      "name": "CFLY-",
+      "exact": [],
+      "upper": []
+    },
+    "4": {
+      "name": "GND",
+      "exact": [
+        "GND"
+      ],
+      "upper": [
+        "GND"
+      ]
+    },
+    "5": {
+      "name": "CFLY+",
+      "exact": [],
+      "upper": []
+    }
+  },
+  "u305": {
+    "1": {
+      "name": "IN",
+      "exact": [
+        "VCC_5V"
+      ],
+      "upper": [
+        "VCC_5V"
+      ]
+    },
+    "2": {
+      "name": "GND",
+      "exact": [
+        "GND"
+      ],
+      "upper": [
+        "GND"
+      ]
+    },
+    "3": {
+      "name": "EN",
+      "exact": [
+        "VCC_5V"
+      ],
+      "upper": [
+        "VCC_5V"
+      ]
+    },
+    "4": {
+      "name": "NC",
+      "exact": [],
+      "upper": []
+    },
+    "5": {
+      "name": "OUT",
+      "exact": [
+        "3V3_PLL_LDO"
+      ],
+      "upper": [
+        "3V3_PLL_LDO"
+      ]
+    }
+  },
+  "c322_fly": {
+    "2": {
+      "name": "2",
+      "exact": [],
+      "upper": []
+    },
+    "1": {
+      "name": "1",
+      "exact": [],
+      "upper": []
+    }
+  },
+  "u5_pin1_sync_in": {
+    "pin": "1",
+    "name": "SYNC_IN",
+    "noConnected": false
+  },
+  "r309": {
+    "2": {
+      "name": "2",
+      "exact": [
+        "DDS_SYNC_IN"
+      ],
+      "upper": [
+        "DDS_SYNC_IN"
+      ]
+    },
+    "1": {
+      "name": "1",
+      "exact": [
+        "GND"
+      ],
+      "upper": [
+        "GND"
+      ]
+    }
+  },
+  "am_vva": {
+    "u302": {
+      "1": {
+        "name": "VDD",
+        "exact": [
+          "5VA_REF"
+        ],
+        "upper": [
+          "5VA_REF"
+        ]
+      },
+      "2": {
+        "name": "VREF",
+        "exact": [
+          "5VA_REF"
+        ],
+        "upper": [
+          "5VA_REF"
+        ]
+      },
+      "3": {
+        "name": "VFB",
+        "exact": [
+          "AM_DAC_OUT"
+        ],
+        "upper": [
+          "AM_DAC_OUT"
+        ]
+      },
+      "4": {
+        "name": "VOUT",
+        "exact": [
+          "AM_DAC_OUT"
+        ],
+        "upper": [
+          "AM_DAC_OUT"
+        ]
+      },
+      "5": {
+        "name": "SYNC#",
+        "exact": [
+          "AM_DAC_CS"
+        ],
+        "upper": [
+          "AM_DAC_CS"
+        ]
+      },
+      "6": {
+        "name": "SCLK",
+        "exact": [
+          "AM_DAC_SCLK"
+        ],
+        "upper": [
+          "AM_DAC_SCLK"
+        ]
+      },
+      "7": {
+        "name": "DIN",
+        "exact": [
+          "AM_DAC_DIN"
+        ],
+        "upper": [
+          "AM_DAC_DIN"
+        ]
+      },
+      "8": {
+        "name": "GND",
+        "exact": [
+          "GND"
+        ],
+        "upper": [
+          "GND"
+        ]
+      }
+    },
+    "u301": {
+      "1": {
+        "name": "RF1",
+        "exact": [
+          "VVA_RFIN"
+        ],
+        "upper": [
+          "VVA_RFIN"
+        ]
+      },
+      "2": {
+        "name": "GND",
+        "exact": [
+          "GND"
+        ],
+        "upper": [
+          "GND"
+        ]
+      },
+      "3": {
+        "name": "V2",
+        "exact": [
+          "VVA_V2"
+        ],
+        "upper": [
+          "VVA_V2"
+        ]
+      },
+      "4": {
+        "name": "I",
+        "exact": [
+          "VVA_I"
+        ],
+        "upper": [
+          "VVA_I"
+        ]
+      },
+      "5": {
+        "name": "NC",
+        "exact": [],
+        "upper": []
+      },
+      "6": {
+        "name": "V1",
+        "exact": [
+          "VVA_V1"
+        ],
+        "upper": [
+          "VVA_V1"
+        ]
+      },
+      "7": {
+        "name": "GND",
+        "exact": [
+          "GND"
+        ],
+        "upper": [
+          "GND"
+        ]
+      },
+      "8": {
+        "name": "RF2",
+        "exact": [
+          "VVA_RFOUT"
+        ],
+        "upper": [
+          "VVA_RFOUT"
+        ]
+      },
+      "9": {
+        "name": "EP",
+        "exact": [
+          "GND"
+        ],
+        "upper": [
+          "GND"
+        ]
+      }
+    },
+    "c311": {
+      "1": {
+        "name": "1",
+        "exact": [
+          "RFOUT"
+        ],
+        "upper": [
+          "RFOUT"
+        ]
+      },
+      "2": {
+        "name": "2",
+        "exact": [
+          "VVA_RFIN"
+        ],
+        "upper": [
+          "VVA_RFIN"
+        ]
+      }
+    },
+    "c312": {
+      "1": {
+        "name": "1",
+        "exact": [
+          "VVA_RFOUT"
+        ],
+        "upper": [
+          "VVA_RFOUT"
+        ]
+      },
+      "2": {
+        "name": "2",
+        "exact": [
+          "VVA_OUT"
+        ],
+        "upper": [
+          "VVA_OUT"
+        ]
+      }
+    },
+    "j_rfout": {
+      "1": {
+        "name": "1",
+        "exact": [
+          "GND"
+        ],
+        "upper": [
+          "GND"
+        ]
+      },
+      "2": {
+        "name": "2",
+        "exact": [
+          "GND"
+        ],
+        "upper": [
+          "GND"
+        ]
+      },
+      "3": {
+        "name": "3",
+        "exact": [
+          "GND"
+        ],
+        "upper": [
+          "GND"
+        ]
+      },
+      "4": {
+        "name": "4",
+        "exact": [
+          "GND"
+        ],
+        "upper": [
+          "GND"
+        ]
+      },
+      "5": {
+        "name": "5",
+        "exact": [
+          "VVA_OUT"
+        ],
+        "upper": [
+          "VVA_OUT"
+        ]
+      }
+    }
+  },
+  "cross_rails": {
+    "VCC_12V": [
+      "power"
+    ],
+    "VCC_5V": [
+      "power",
+      "sign"
+    ],
+    "5VOSC": [
+      "REF_CLOCK",
+      "power"
+    ],
+    "5VA_REF": [
+      "REF_CLOCK",
+      "power",
+      "sign"
+    ],
+    "3V3_REF": [
+      "CLKDIST",
+      "REF_CLOCK",
+      "power",
+      "sign"
+    ],
+    "3V3_PLL_LDO": [
+      "power"
+    ],
+    "3V3_PLL": [
+      "power",
+      "sign"
+    ],
+    "3V3_PLLRF": [
+      "power",
+      "sign"
+    ],
+    "3V3_BUCK": [
+      "power"
+    ],
+    "VEE_N5V": [
+      "power",
+      "sign"
+    ],
+    "3V3_U225": [
+      "CLKDIST"
+    ],
+    "3V3_U226": [
+      "CLKDIST"
+    ],
+    "3V3_DIV": [
+      "CLKDIST"
+    ]
+  },
+  "cross_clocks": {
+    "OCXO_RF": [
+      "CLKDIST",
+      "REF_CLOCK"
+    ],
+    "CLK_FB_P": [
+      "CLKDIST",
+      "REF_CLOCK"
+    ],
+    "CLK_FB_N": [
+      "CLKDIST",
+      "REF_CLOCK"
+    ],
+    "CLK100_LMXA_P": [
+      "CLKDIST",
+      "sign"
+    ],
+    "CLK100_LMXA_N": [
+      "CLKDIST",
+      "sign"
+    ],
+    "CLK100_DDSA_P": [
+      "CLKDIST",
+      "sign"
+    ],
+    "CLK100_DDSA_N": [
+      "CLKDIST",
+      "sign"
+    ],
+    "CLK100_DIV_P": [
+      "CLKDIST"
+    ],
+    "CLK100_DIV_N": [
+      "CLKDIST"
+    ],
+    "CLK100_LMXB_P": [
+      "CLKDIST"
+    ],
+    "CLK100_LMXB_N": [
+      "CLKDIST"
+    ],
+    "CLK100_DDSB_P": [
+      "CLKDIST"
+    ],
+    "CLK100_DDSB_N": [
+      "CLKDIST"
+    ]
+  },
+  "h1_40pin_closure": [
+    {
+      "pin": 1,
+      "nets_exact": [
+        "GND"
+      ],
+      "nets_upper": [
+        "GND"
+      ],
+      "connected_pages": [
+        "sign(99pins)",
+        "power",
+        "PA_REF",
+        "REF_CLOCK",
+        "CLKDIST"
+      ]
+    },
+    {
+      "pin": 2,
+      "nets_exact": [
+        "PLL_SCK"
+      ],
+      "nets_upper": [
+        "PLL_SCK"
+      ],
+      "connected_pages": [
+        "sign(1pins)"
+      ]
+    },
+    {
+      "pin": 3,
+      "nets_exact": [
+        "PLL_SDI"
+      ],
+      "nets_upper": [
+        "PLL_SDI"
+      ],
+      "connected_pages": [
+        "sign(1pins)"
+      ]
+    },
+    {
+      "pin": 4,
+      "nets_exact": [
+        "CSB"
+      ],
+      "nets_upper": [
+        "CSB"
+      ],
+      "connected_pages": [
+        "sign(2pins)"
+      ]
+    },
+    {
+      "pin": 5,
+      "nets_exact": [
+        "CE"
+      ],
+      "nets_upper": [
+        "CE"
+      ],
+      "connected_pages": [
+        "sign(2pins)"
+      ]
+    },
+    {
+      "pin": 6,
+      "nets_exact": [
+        "MUXOUT",
+        "MUXout"
+      ],
+      "nets_upper": [
+        "MUXOUT"
+      ],
+      "connected_pages": [
+        "sign(1pins)"
+      ]
+    },
+    {
+      "pin": 7,
+      "nets_exact": [
+        "GND"
+      ],
+      "nets_upper": [
+        "GND"
+      ],
+      "connected_pages": [
+        "sign(99pins)",
+        "power",
+        "PA_REF",
+        "REF_CLOCK",
+        "CLKDIST"
+      ]
+    },
+    {
+      "pin": 8,
+      "nets_exact": [
+        "DDS_SCLK"
+      ],
+      "nets_upper": [
+        "DDS_SCLK"
+      ],
+      "connected_pages": [
+        "sign(1pins)"
+      ]
+    },
+    {
+      "pin": 9,
+      "nets_exact": [
+        "CS_DDS"
+      ],
+      "nets_upper": [
+        "CS_DDS"
+      ],
+      "connected_pages": [
+        "sign(2pins)"
+      ]
+    },
+    {
+      "pin": 10,
+      "nets_exact": [
+        "IOUPDATE",
+        "IOupdate"
+      ],
+      "nets_upper": [
+        "IOUPDATE"
+      ],
+      "connected_pages": [
+        "sign(2pins)"
+      ]
+    },
+    {
+      "pin": 11,
+      "nets_exact": [
+        "DDSIO_0"
+      ],
+      "nets_upper": [
+        "DDSIO_0"
+      ],
+      "connected_pages": [
+        "sign(1pins)"
+      ]
+    },
+    {
+      "pin": 12,
+      "nets_exact": [
+        "DDSIO_1"
+      ],
+      "nets_upper": [
+        "DDSIO_1"
+      ],
+      "connected_pages": [
+        "sign(1pins)"
+      ]
+    },
+    {
+      "pin": 13,
+      "nets_exact": [
+        "GND"
+      ],
+      "nets_upper": [
+        "GND"
+      ],
+      "connected_pages": [
+        "sign(99pins)",
+        "power",
+        "PA_REF",
+        "REF_CLOCK",
+        "CLKDIST"
+      ]
+    },
+    {
+      "pin": 14,
+      "nets_exact": [
+        "DDSIO_2"
+      ],
+      "nets_upper": [
+        "DDSIO_2"
+      ],
+      "connected_pages": [
+        "sign(1pins)"
+      ]
+    },
+    {
+      "pin": 15,
+      "nets_exact": [
+        "DDSIO_3"
+      ],
+      "nets_upper": [
+        "DDSIO_3"
+      ],
+      "connected_pages": [
+        "sign(1pins)"
+      ]
+    },
+    {
+      "pin": 16,
+      "nets_exact": [
+        "DDS_P0"
+      ],
+      "nets_upper": [
+        "DDS_P0"
+      ],
+      "connected_pages": [
+        "sign(1pins)"
+      ]
+    },
+    {
+      "pin": 17,
+      "nets_exact": [
+        "DDS_P1"
+      ],
+      "nets_upper": [
+        "DDS_P1"
+      ],
+      "connected_pages": [
+        "sign(1pins)"
+      ]
+    },
+    {
+      "pin": 18,
+      "nets_exact": [
+        "DDS_P2"
+      ],
+      "nets_upper": [
+        "DDS_P2"
+      ],
+      "connected_pages": [
+        "sign(1pins)"
+      ]
+    },
+    {
+      "pin": 19,
+      "nets_exact": [
+        "GND"
+      ],
+      "nets_upper": [
+        "GND"
+      ],
+      "connected_pages": [
+        "sign(99pins)",
+        "power",
+        "PA_REF",
+        "REF_CLOCK",
+        "CLKDIST"
+      ]
+    },
+    {
+      "pin": 20,
+      "nets_exact": [
+        "DDS_P3"
+      ],
+      "nets_upper": [
+        "DDS_P3"
+      ],
+      "connected_pages": [
+        "sign(1pins)"
+      ]
+    },
+    {
+      "pin": 21,
+      "nets_exact": [
+        "DDS_RST",
+        "dds_rst"
+      ],
+      "nets_upper": [
+        "DDS_RST"
+      ],
+      "connected_pages": [
+        "sign(2pins)"
+      ]
+    },
+    {
+      "pin": 22,
+      "nets_exact": [
+        "DDS_SYNC_CLK",
+        "DDS_SYNC_clk"
+      ],
+      "nets_upper": [
+        "DDS_SYNC_CLK"
+      ],
+      "connected_pages": [
+        "sign(1pins)"
+      ]
+    },
+    {
+      "pin": 23,
+      "nets_exact": [
+        "GND"
+      ],
+      "nets_upper": [
+        "GND"
+      ],
+      "connected_pages": [
+        "sign(99pins)",
+        "power",
+        "PA_REF",
+        "REF_CLOCK",
+        "CLKDIST"
+      ]
+    },
+    {
+      "pin": 24,
+      "nets_exact": [
+        "ADL5375_DSOP"
+      ],
+      "nets_upper": [
+        "ADL5375_DSOP"
+      ],
+      "connected_pages": [
+        "sign(2pins)"
+      ]
+    },
+    {
+      "pin": 25,
+      "nets_exact": [
+        "AM_DAC_CS"
+      ],
+      "nets_upper": [
+        "AM_DAC_CS"
+      ],
+      "connected_pages": [
+        "sign(2pins)"
+      ]
+    },
+    {
+      "pin": 26,
+      "nets_exact": [
+        "AM_DAC_SCLK"
+      ],
+      "nets_upper": [
+        "AM_DAC_SCLK"
+      ],
+      "connected_pages": [
+        "sign(1pins)"
+      ]
+    },
+    {
+      "pin": 27,
+      "nets_exact": [
+        "AM_DAC_DIN"
+      ],
+      "nets_upper": [
+        "AM_DAC_DIN"
+      ],
+      "connected_pages": [
+        "sign(1pins)"
+      ]
+    },
+    {
+      "pin": 28,
+      "nets_exact": [
+        "GND"
+      ],
+      "nets_upper": [
+        "GND"
+      ],
+      "connected_pages": [
+        "sign(99pins)",
+        "power",
+        "PA_REF",
+        "REF_CLOCK",
+        "CLKDIST"
+      ]
+    },
+    {
+      "pin": 29,
+      "nets_exact": [
+        "SPI_REF_SCK"
+      ],
+      "nets_upper": [
+        "SPI_REF_SCK"
+      ],
+      "connected_pages": [
+        "REF_CLOCK"
+      ]
+    },
+    {
+      "pin": 30,
+      "nets_exact": [
+        "SPI_REF_MOSI"
+      ],
+      "nets_upper": [
+        "SPI_REF_MOSI"
+      ],
+      "connected_pages": [
+        "REF_CLOCK"
+      ]
+    },
+    {
+      "pin": 31,
+      "nets_exact": [
+        "ADF_LE"
+      ],
+      "nets_upper": [
+        "ADF_LE"
+      ],
+      "connected_pages": [
+        "REF_CLOCK"
+      ]
+    },
+    {
+      "pin": 32,
+      "nets_exact": [
+        "ADF_CE"
+      ],
+      "nets_upper": [
+        "ADF_CE"
+      ],
+      "connected_pages": [
+        "REF_CLOCK"
+      ]
+    },
+    {
+      "pin": 33,
+      "nets_exact": [
+        "GND"
+      ],
+      "nets_upper": [
+        "GND"
+      ],
+      "connected_pages": [
+        "sign(99pins)",
+        "power",
+        "PA_REF",
+        "REF_CLOCK",
+        "CLKDIST"
+      ]
+    },
+    {
+      "pin": 34,
+      "nets_exact": [
+        "DAC_SYNC_N"
+      ],
+      "nets_upper": [
+        "DAC_SYNC_N"
+      ],
+      "connected_pages": [
+        "REF_CLOCK"
+      ]
+    },
+    {
+      "pin": 35,
+      "nets_exact": [
+        "REF_SEL"
+      ],
+      "nets_upper": [
+        "REF_SEL"
+      ],
+      "connected_pages": [
+        "REF_CLOCK"
+      ]
+    },
+    {
+      "pin": 36,
+      "nets_exact": [
+        "REF_LOCK"
+      ],
+      "nets_upper": [
+        "REF_LOCK"
+      ],
+      "connected_pages": [
+        "REF_CLOCK"
+      ]
+    },
+    {
+      "pin": 37,
+      "nets_exact": [
+        "EXTREF_DET"
+      ],
+      "nets_upper": [
+        "EXTREF_DET"
+      ],
+      "connected_pages": [
+        "REF_CLOCK"
+      ]
+    },
+    {
+      "pin": 38,
+      "nets_exact": [
+        "GND"
+      ],
+      "nets_upper": [
+        "GND"
+      ],
+      "connected_pages": [
+        "sign(99pins)",
+        "power",
+        "PA_REF",
+        "REF_CLOCK",
+        "CLKDIST"
+      ]
+    },
+    {
+      "pin": 39,
+      "nets_exact": [
+        "VC_MON"
+      ],
+      "nets_upper": [
+        "VC_MON"
+      ],
+      "connected_pages": [
+        "REF_CLOCK"
+      ]
+    },
+    {
+      "pin": 40,
+      "nets_exact": [
+        "GND"
+      ],
+      "nets_upper": [
+        "GND"
+      ],
+      "connected_pages": [
+        "sign(99pins)",
+        "power",
+        "PA_REF",
+        "REF_CLOCK",
+        "CLKDIST"
+      ]
+    }
+  ],
+  "p0_p1_p2_checks": {
+    "P0-1_U226_OUT4_5": {
+      "OUT4_N": {
+        "name": "OUT4_N",
+        "exact": [
+          "CLK_FB_N"
+        ],
+        "upper": [
+          "CLK_FB_N"
+        ]
+      },
+      "OUT5_P": {
+        "name": "OUT5_P",
+        "exact": [
+          "CLK100_DIV_P"
+        ],
+        "upper": [
+          "CLK100_DIV_P"
+        ]
+      },
+      "OUT5_N": {
+        "name": "OUT5_N",
+        "exact": [
+          "CLK100_DIV_N"
+        ],
+        "upper": [
+          "CLK100_DIV_N"
+        ]
+      },
+      "N_SEL": {
+        "name": "N_SEL",
+        "exact": [
+          "GND"
+        ],
+        "upper": [
+          "GND"
+        ]
+      }
+    },
+    "P0-2_R260_C260_J_REFOUT": {
+      "R260": {
+        "2": {
+          "name": "2",
+          "exact": [
+            "REFOUT_BNC"
+          ],
+          "upper": [
+            "REFOUT_BNC"
+          ]
+        },
+        "1": {
+          "name": "1",
+          "exact": [
+            "REFOUT_DRV"
+          ],
+          "upper": [
+            "REFOUT_DRV"
+          ]
+        }
+      },
+      "C260": {
+        "1": {
+          "name": "1",
+          "exact": [
+            "REFOUT_BNC"
+          ],
+          "upper": [
+            "REFOUT_BNC"
+          ]
+        },
+        "2": {
+          "name": "2",
+          "exact": [
+            "GND"
+          ],
+          "upper": [
+            "GND"
+          ]
+        }
+      },
+      "J_REFOUT_5": {
+        "name": "5",
+        "exact": [
+          "REFOUT_BNC"
+        ],
+        "upper": [
+          "REFOUT_BNC"
+        ]
+      }
+    },
+    "P0-3_U222_VFB_DAC8551": {
+      "name": "VFB",
+      "exact": [
+        "DAC_VOUT"
+      ],
+      "upper": [
+        "DAC_VOUT"
+      ]
+    },
+    "P1-1_R265_R266": {
+      "R265": {
+        "2": {
+          "name": "2",
+          "exact": [
+            "EXTREF_AC"
+          ],
+          "upper": [
+            "EXTREF_AC"
+          ]
+        },
+        "1": {
+          "name": "1",
+          "exact": [
+            "3V3_REF"
+          ],
+          "upper": [
+            "3V3_REF"
+          ]
+        }
+      },
+      "R266": {
+        "2": {
+          "name": "2",
+          "exact": [
+            "GND"
+          ],
+          "upper": [
+            "GND"
+          ]
+        },
+        "1": {
+          "name": "1",
+          "exact": [
+            "EXTREF_AC"
+          ],
+          "upper": [
+            "EXTREF_AC"
+          ]
+        }
+      }
+    },
+    "P1-2_U228_U233_DIV10": {
+      "U228_D0_3": {
+        "D0": [
+          "3V3_DIV"
+        ],
+        "D1": [
+          "3V3_DIV"
+        ],
+        "D2": [
+          "GND"
+        ],
+        "D3": [
+          "3V3_DIV"
+        ]
+      },
+      "U233_A": {
+        "name": "A",
+        "exact": [
+          "U228_TC"
+        ],
+        "upper": [
+          "U228_TC"
+        ]
+      },
+      "U233_Y": {
+        "name": "Y",
+        "exact": [
+          "U228_LOAD_N"
+        ],
+        "upper": [
+          "U228_LOAD_N"
+        ]
+      }
+    },
+    "P1-3_U234_REF_SEL": {
+      "1": {
+        "name": "OE#",
+        "exact": [
+          "GND"
+        ],
+        "upper": [
+          "GND"
+        ]
+      },
+      "2": {
+        "name": "A",
+        "exact": [
+          "REF_SEL"
+        ],
+        "upper": [
+          "REF_SEL"
+        ]
+      },
+      "3": {
+        "name": "GND",
+        "exact": [
+          "GND"
+        ],
+        "upper": [
+          "GND"
+        ]
+      },
+      "4": {
+        "name": "Y",
+        "exact": [
+          "REF_SEL_5V"
+        ],
+        "upper": [
+          "REF_SEL_5V"
+        ]
+      },
+      "5": {
+        "name": "VCC",
+        "exact": [
+          "5VA_REF"
+        ],
+        "upper": [
+          "5VA_REF"
+        ]
+      }
+    },
+    "P2-1_U225_SD": {
+      "FILTA": {
+        "name": "FILTA",
+        "exact": [
+          "GND"
+        ],
+        "upper": [
+          "GND"
+        ]
+      },
+      "FILTB": {
+        "name": "FILTB",
+        "exact": [
+          "GND"
+        ],
+        "upper": [
+          "GND"
+        ]
+      },
+      "SD1": {
+        "name": "SD1",
+        "exact": [
+          "GND"
+        ],
+        "upper": [
+          "GND"
+        ]
+      },
+      "SD2": {
+        "name": "SD2",
+        "exact": [
+          "3V3_U225"
+        ],
+        "upper": [
+          "3V3_U225"
+        ]
+      }
+    },
+    "C299_C304_GNDs": {
+      "C299": {
+        "1": {
+          "name": "1",
+          "exact": [
+            "3V3_DIV"
+          ],
+          "upper": [
+            "3V3_DIV"
+          ]
+        },
+        "2": {
+          "name": "2",
+          "exact": [
+            "GND"
+          ],
+          "upper": [
+            "GND"
+          ]
+        }
+      },
+      "C300": {
+        "1": {
+          "name": "1",
+          "exact": [
+            "3V3_DIV"
+          ],
+          "upper": [
+            "3V3_DIV"
+          ]
+        },
+        "2": {
+          "name": "2",
+          "exact": [
+            "GND"
+          ],
+          "upper": [
+            "GND"
+          ]
+        }
+      },
+      "C301": {
+        "1": {
+          "name": "1",
+          "exact": [
+            "3V3_DIV"
+          ],
+          "upper": [
+            "3V3_DIV"
+          ]
+        },
+        "2": {
+          "name": "2",
+          "exact": [
+            "GND"
+          ],
+          "upper": [
+            "GND"
+          ]
+        }
+      },
+      "C302": {
+        "1": {
+          "name": "1",
+          "exact": [
+            "3V3_DIV"
+          ],
+          "upper": [
+            "3V3_DIV"
+          ]
+        },
+        "2": {
+          "name": "2",
+          "exact": [
+            "GND"
+          ],
+          "upper": [
+            "GND"
+          ]
+        }
+      },
+      "C303": {
+        "1": {
+          "name": "1",
+          "exact": [
+            "3V3_DIV"
+          ],
+          "upper": [
+            "3V3_DIV"
+          ]
+        },
+        "2": {
+          "name": "2",
+          "exact": [
+            "GND"
+          ],
+          "upper": [
+            "GND"
+          ]
+        }
+      },
+      "C304": {
+        "1": {
+          "name": "1",
+          "exact": [
+            "3V3_DIV"
+          ],
+          "upper": [
+            "3V3_DIV"
+          ]
+        },
+        "2": {
+          "name": "2",
+          "exact": [
+            "GND"
+          ],
+          "upper": [
+            "GND"
+          ]
+        }
+      }
+    }
+  }
+}

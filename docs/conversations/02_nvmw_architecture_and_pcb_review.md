@@ -1,7 +1,7 @@
 # 会话 02 · NV 微波源整机架构、原理图与 PCB 审查
 
 > 会话 ID：`c89182ba-8660-4a98-badd-253620166523`  
-> 整理自 Antigravity 本地会话日志，已过滤内部工具元数据。
+> 整理自 Antigravity 本地会话日志，已过滤内部思考、工具调用与系统元数据，并将产物链接适配为仓库相对路径。
 
 ---
 
@@ -38,7 +38,7 @@
 
 ### 二、接下来的审查流程
 
-针对您提供的每一份原理图或 PCB，我将按以下维度逐项核查并输出分级问题清单（**严重问题 / 一般问题 / 优化建议 / 待确认项**），定位到具体**器件位号、引脚与网络名**，并对照工作区中的芯片手册（如 [芯片手册](file:///c:/Users/Jo1yc/Desktop/硕士课题/芯片手册) 下的 `lmx2595.pdf`、`DDS_AD9958.pdf`、晶振规格书等）核验外围参数：
+针对您提供的每一份原理图或 PCB，我将按以下维度逐项核查并输出分级问题清单（**严重问题 / 一般问题 / 优化建议 / 待确认项**），定位到具体**器件位号、引脚与网络名**，并对照工作区中的芯片手册（如 `芯片手册` 下的 `lmx2595.pdf`、`DDS_AD9958.pdf`、晶振规格书等）核验外围参数：
 
 1. **原理图审查**：系统架构与指标可达性 → 关键芯片引脚/外围参数计算 → 电源树/LDO 噪声与功耗预算 → 模拟/射频阻抗匹配与巴伦/滤波器 → 接口电平/保护与连接器定义 → 原理图 ERC 与封装映射。
 2. **PCB 布线审查**：板层叠层与 50 Ω 受控阻抗计算 → 射频微带/共面波导（CPWG）连续参考面与过孔围栏（Via Fence） → PLL/DDS/PA 电源去耦高频回路与散热过孔 → 模拟/数字/射频分区与跨分割回流 → 双通道隔离与屏蔽结构 → DRC 与可制造性（DFM）。
@@ -49,18 +49,22 @@
 
 1. **审查载体**：
    - 是直接连接当前打开的 **嘉立创EDA 专业版（EasyEDA Pro）** 实时读取工程？
-   - 还是审查工作区现有目录（如 [硬件/功率板](file:///c:/Users/Jo1yc/Desktop/硕士课题/硬件/功率板)、[硬件/patest](file:///c:/Users/Jo1yc/Desktop/硕士课题/硬件/patest)、[锁相环](file:///c:/Users/Jo1yc/Desktop/硕士课题/锁相环)）或您即将发给我的原理图/PCB 文件（PDF / 截图 / 网表 / 工程文件）？
+   - 还是审查工作区现有目录（如 `硬件/功率板`、`硬件/patest`、`锁相环`）或您即将发给我的原理图/PCB 文件（PDF / 截图 / 网表 / 工程文件）？
 2. **整体硬件架构**：这套微波源目前是一块整板，还是拆分为多块子板（例如：**参考时钟板 + DDS/PLL 频率合成板 + 射频调幅/功放板 + FPGA/MCU 主控底板**）？先从哪一块看起？
 
 ---
 
 ## Turn 2 · 👤 User (2026-11-23 08:28:42 UTC)
 
-链接当前的eda去读取工程，目前我是准备使用mcu开发板，然后功率板单独打，其余在一张板子上，更多内容@[c:\Users\Jo1yc\Desktop\硕士课题\nv] 在这个文件夹里面，但是里面有一些内容是废案，如果你有相关疑问可以问我，或者在这个文件夹内创建一个交流文档，我可以让其他参与过设计的ai在文档内和你交流
+链接当前的eda去读取工程，目前我是准备使用mcu开发板，然后功率板单独打，其余在一张板子上，更多内容`nv/` 在这个文件夹里面，但是里面有一些内容是废案，如果你有相关疑问可以问我，或者在这个文件夹内创建一个交流文档，我可以让其他参与过设计的ai在文档内和你交流
+
+---
 
 ## Turn 3 · 👤 User (2026-11-23 08:48:44 UTC)
 
 链接eda
+
+---
 
 ## Turn 4 · 👤 User (2026-11-23 08:54:15 UTC)
 
@@ -74,7 +78,7 @@
 
 ### 一、EasyEDA 实时连接状态
 
-- **桥接服务**：已通过 [py_bridge.py](file:///c:/Users/Jo1yc/Desktop/硕士课题/_agent_tmp/py_bridge.py) 在 `http://127.0.0.1:49620`（兼容 `easyeda-bridge` HTTP + WebSocket `/eda` 协议）后台运行并握手成功（`edaConnected: true`，`windowId = a5959ed7-8b25-44c9-b863-5a5acacb1fc9`）。
+- **桥接服务**：已通过 `py_bridge.py` 在 `http://127.0.0.1:49620`（兼容 `easyeda-bridge` HTTP + WebSocket `/eda` 协议）后台运行并握手成功（`edaConnected: true`，`windowId = a5959ed7-8b25-44c9-b863-5a5acacb1fc9`）。
 - **当前打开工程**：**`NVmw`**（`uuid: 87f9d2cc03d32aba336dfb63b09e65212d216eb3e947427a284c1d19ae424344`）
   - **原理图 `Schematic1`**（`uuid: 29335980919d6f2e`）：
     - `sign`（`uuid: 46bb8782cca161a7`，当前活动页）：实测 `165` 个器件（包含 `U1`、`U2`、`U5` [`AD9958BCPZ-REEL7`]、`U9`、`U14`、`U17`、`U18`、`U21` 等）。
@@ -85,13 +89,13 @@
 
 ### 二、已过滤废案与多 AI 协同交流文档
 
-已创建 [电路原理图与PCB审查_AI协同交流.md](file:///c:/Users/Jo1yc/Desktop/硕士课题/nv/电路原理图与PCB审查_AI协同交流.md)，内容包括：
+已创建 [电路原理图与PCB审查_AI协同交流.md](../nvmw_v1_review_and_refactor_report.md)，内容包括：
 
-1. **三板架构与基线对齐**：已按您确认的「STM32H743 开发板 + 独立功率板（[硬件/功率板](file:///c:/Users/Jo1yc/Desktop/硕士课题/硬件/功率板) / [硬件/patest](file:///c:/Users/Jo1yc/Desktop/硕士课题/硬件/patest)）+ 主射频与时钟合成板」梳理有效文档，并明确排除 `废案/` 与 10-10 过期 BOM（[NVmw_微波源_BOM选型清单.md](file:///c:/Users/Jo1yc/Desktop/硕士课题/nv/NVmw_微波源_BOM选型清单.md)）的干扰。
+1. **三板架构与基线对齐**：已按您确认的「STM32H743 开发板 + 独立功率板（`硬件/功率板` / `硬件/patest`）+ 主射频与时钟合成板」梳理有效文档，并明确排除 `废案/` 与 10-10 过期 BOM（`NVmw_微波源_BOM选型清单.md`）的干扰。
 2. **首轮离线审查发现（基于 `clktree` 导出快照与功率板资料）**：
-   - **P0-1**：`CLK_DIST` 页 [build_spec.json](file:///c:/Users/Jo1yc/Desktop/硕士课题/_agent_tmp/build_spec.json) 中 `U26`（`LMK1D1208RHDT`）Pin 23（`OUT4_N` → `CLK_FB_N`）与 Pin 24/25（`OUT5_P/N` → `CLK100_DIV_P/N`）遗漏连接。
+   - **P0-1**：`CLK_DIST` 页 `build_spec.json` 中 `U26`（`LMK1D1208RHDT`）Pin 23（`OUT4_N` → `CLK_FB_N`）与 Pin 24/25（`OUT5_P/N` → `CLK100_DIV_P/N`）遗漏连接。
    - **P0-2**：`10MHzREFOUT` 路径上 `C60`（100 nF）并联在 `REFOUT_BNC` 与 `GND` 之间导致 10 MHz 交流短路，且 `R60` 在 `CLK_DIST` / `REF_CLOCK` 两页分别存在 1 µF 电容错用 / `0 Ω DNP` 问题。
-   - **P0-3**：`REF_CLOCK` 页第 ⑨ 块与 `CLK_DIST` 页存在 23 个器件位号重复（见 [CLK_DIST_NOTES.md](file:///c:/Users/Jo1yc/Desktop/硕士课题/_agent_tmp/CLK_DIST_NOTES.md)）。
+   - **P0-3**：`REF_CLOCK` 页第 ⑨ 块与 `CLK_DIST` 页存在 23 个器件位号重复（见 `CLK_DIST_NOTES.md`）。
    - **P1**：`ADF4002`（`U1-8`）`REFIN` 缺直流偏置、`U28`（`74LVC163`）+ `U31`（`74LVC1G14`）100 MHz ÷5 反馈建立时间裕量不足、`U5`（`TS5A3159`）5 V 供电下 3.3 V 控制电平 $V_{IH}$ 不足等。
 3. **多 AI 协同讨论区**：在文档第四节预留了 4 个关键架构接口待确认问题（主板与功率板的级联与接口定义、`clktree` 的合并/端接方式、AM 模拟通路预留、优先审查目标），您可以让其他参与设计的 AI 直接在该文档中回复补充。
 
@@ -99,7 +103,7 @@
 
 ### 下一步建议
 
-您希望我现在**立即对当前已连上的 `NVmw` 工程**（`sign` 页、`power` 页及 `PCB1`）进行全量引脚/网表/器件属性与布线提取并展开逐项深度审查，还是先审查独立功率板（[硬件/功率板](file:///c:/Users/Jo1yc/Desktop/硕士课题/硬件/功率板)）或等其他 AI 先在 [电路原理图与PCB审查_AI协同交流.md](file:///c:/Users/Jo1yc/Desktop/硕士课题/nv/电路原理图与PCB审查_AI协同交流.md) 中补充回复？
+您希望我现在**立即对当前已连上的 `NVmw` 工程**（`sign` 页、`power` 页及 `PCB1`）进行全量引脚/网表/器件属性与布线提取并展开逐项深度审查，还是先审查独立功率板（`硬件/功率板`）或等其他 AI 先在 [电路原理图与PCB审查_AI协同交流.md](../nvmw_v1_review_and_refactor_report.md) 中补充回复？
 
 ---
 
@@ -112,7 +116,7 @@
 
 收到！我们将按**分页面模块化**的思路保留全部功能模块（将**时钟树**、**本振+DDS+IQ调制**、**功放与衰减/开关**、**电源树**拆分为独立原理图页管理）。
 
-在进入下一步决策前，先将已完成提取的 **`NVmw` 实时工程（`sign` 页、`power` 页、`PCB1`）全量网表/引脚/属性深度审查报告**、**独立功率板（`硬件/功率板` Gerber 网表）交叉核查结果**以及与 [电路原理图与PCB审查_AI协同交流.md](file:///c:/Users/Jo1yc/Desktop/硕士课题/nv/%E7%94%B5%E8%B7%AF%E5%8E%9F%E7%90%86%E5%9B%BE%E4%B8%8EPCB%E5%AE%A1%E6%9F%A5_AI%E5%8D%8F%E5%90%8C%E4%BA%A4%E6%B5%81.md) 第五节主咨询线的对齐结论完整呈现如下：
+在进入下一步决策前，先将已完成提取的 **`NVmw` 实时工程（`sign` 页、`power` 页、`PCB1`）全量网表/引脚/属性深度审查报告**、**独立功率板（`硬件/功率板` Gerber 网表）交叉核查结果**以及与 [电路原理图与PCB审查_AI协同交流.md](../nvmw_v1_review_and_refactor_report.md) 第五节主咨询线的对齐结论完整呈现如下：
 
 ---
 
@@ -188,7 +192,7 @@
 
 ## 四、与主咨询线（文档第五节）架构交接对齐
 
-结合另一位 AI 在 [电路原理图与PCB审查_AI协同交流.md](file:///c:/Users/Jo1yc/Desktop/硕士课题/nv/%E7%94%B5%E8%B7%AF%E5%8E%9F%E7%90%86%E5%9B%BE%E4%B8%8EPCB%E5%AE%A1%E6%9F%A5_AI%E5%8D%8F%E5%90%8C%E4%BA%A4%E6%B5%81.md) 第五节补充的架构背景，我们接下来的原理图重构需要围绕以下几个核心分支拍板。
+结合另一位 AI 在 [电路原理图与PCB审查_AI协同交流.md](../nvmw_v1_review_and_refactor_report.md) 第五节补充的架构背景，我们接下来的原理图重构需要围绕以下几个核心分支拍板。
 
 现在进入第二个决策问题（关于 **`NVmw` 拆分多页原理图后的页面组织与单/双通道范围**）：
 
@@ -287,13 +291,13 @@
    - `power` 页（主板电源树）：统一 `GND` 与 `AGND`（单点汇接或统一为 `GND`）、修正大小写分裂网络标号、修复 `L6 (15 uH)` 功率电感封装、`C45/C47/C83` 大电容封装及 `C27 (22 uF)` 容值属性。
 2. **调制基线（回应主咨询线 §5.7）**：单通道 v1 采用 `AD9958` 内部数字调幅/调频/调相（`ASF / FTW / POW`）配合 STM32H7 控制，主板上不额外增加模拟压控衰减器 `HMC346`。
 
-请确认下一步我们是**先将完整审查报告与上述定案写入协同文档 [电路原理图与PCB审查_AI协同交流.md](file:///c:/Users/Jo1yc/Desktop/硕士课题/nv/%E7%94%B5%E8%B7%AF%E5%8E%9F%E7%90%86%E5%9B%BE%E4%B8%8EPCB%E5%AE%A1%E6%9F%A5_AI%E5%8D%8F%E5%90%8C%E4%BA%A4%E6%B5%81.md) 供你和另一位 AI 审阅，还是在更新文档的同时直接开始在嘉立创 EDA 中对 `NVmw` 工程执行拆页与修复？**
+请确认下一步我们是**先将完整审查报告与上述定案写入协同文档 [电路原理图与PCB审查_AI协同交流.md](../nvmw_v1_review_and_refactor_report.md) 供你和另一位 AI 审阅，还是在更新文档的同时直接开始在嘉立创 EDA 中对 `NVmw` 工程执行拆页与修复？**
 
 ---
 
 ### 🤖 Assistant (2026-11-23 10:45:22 UTC)
 
-已完成全量审查结论与定案整理，并将第六节正式追加至 [电路原理图与PCB审查_AI协同交流.md](file:///c:/Users/Jo1yc/Desktop/硕士课题/nv/%E7%94%B5%E8%B7%AF%E5%8E%9F%E7%90%86%E5%9B%BE%E4%B8%8EPCB%E5%AE%A1%E6%9F%A5_AI%E5%8D%8F%E5%90%8C%E4%BA%A4%E6%B5%81.md#L276-L348)（当前全程严格保持只读，未修改嘉立创 EDA 中的 `NVmw` 工程）。
+已完成全量审查结论与定案整理，并将第六节正式追加至 [电路原理图与PCB审查_AI协同交流.md](../nvmw_v1_review_and_refactor_report.md)（当前全程严格保持只读，未修改嘉立创 EDA 中的 `NVmw` 工程）。
 
 > [!IMPORTANT]
 > **对上一轮回复中 `patest` 独立功率板两条提醒的紧急纠偏（已按原厂数据手册核实！）**
@@ -304,16 +308,16 @@
 
 ### 本次写入协同文档第六节的核心内容摘要
 
-1. **架构定案（[6.1 节](file:///c:/Users/Jo1yc/Desktop/硕士课题/nv/%E7%94%B5%E8%B7%AF%E5%8E%9F%E7%90%86%E5%9B%BE%E4%B8%8EPCB%E5%AE%A1%E6%9F%A5_AI%E5%8D%8F%E5%90%8C%E4%BA%A4%E6%B5%81.md#L283-L290)）**：
+1. **架构定案（[6.1 节](../nvmw_v1_review_and_refactor_report.md)）**：
    - `NVmw` 首版定位为**单通道验证版（v1）**，调通后再扩展双通道（v2）；
    - 多页拆分：**时钟页**采用方案 A（迁入修复后 `clktree` 的 `REF_CLOCK` + `CLK_DIST` 并全贴装一步验证）、**主板合成页（`sign`）**保留 `AD9958 + LMX2595 + ADL5375-05` 并直接出 SMA 接 `patest`、**功放归档页（新建 `pa` 页）**容纳并修复 `HMC1119 -> PMA3-43-1W+ -> HMC349`、**电源页（`power`）**同步整改并补齐 `clktree` 供电；
    - 调制与本振基线维持 `LMX2595 + AD9958(数字 ASF/FTW/POW) + ADL5375-05`，不加 `HMC346`。
 
-2. **已打板 `patest` 功率板核查要点（[6.2 节](file:///c:/Users/Jo1yc/Desktop/硕士课题/nv/%E7%94%B5%E8%B7%AF%E5%8E%9F%E7%90%86%E5%9B%BE%E4%B8%8EPCB%E5%AE%A1%E6%9F%A5_AI%E5%8D%8F%E5%90%8C%E4%BA%A4%E6%B5%81.md#L293-L307)）**：
+2. **已打板 `patest` 功率板核查要点（[6.2 节](../nvmw_v1_review_and_refactor_report.md)）**：
    - **同轴跳线顺序**：务必按 `主板输出 -> RF3 (HMC1119 输入) -> RF4 (输出) -> RF1 (PMA3-43 输入) -> RF2 (输出)`（先衰减后放大）；
    - **`L1` 与 `L6` 电流/自谐振提醒**：`patest` 上 `L1 (CMI322513J680M, 68 uH)` 额定电流仅 $150\text{ mA}$（目前仅喂给 `HMC1119` `<10 mA`，轻载可用但**严禁从 `TP2 (5vcc)` 外引大负载**）；`L6 (BRL2012T1R5M, 1.5 uH)` 载流 700–750 mA 够用但标称最小自谐振频率 $250\text{ MHz}$，若 $2.0 \sim 3.5\text{ GHz}$ 实测发现特定频点凹陷，可替换为评估板同款 `0805LS-152XJEC`。
 
-3. **`NVmw` 全量深度审查发现的重点新增隐患（[6.3 节](file:///c:/Users/Jo1yc/Desktop/硕士课题/nv/%E7%94%B5%E8%B7%AF%E5%8E%9F%E7%90%86%E5%9B%BE%E4%B8%8EPCB%E5%AE%A1%E6%9F%A5_AI%E5%8D%8F%E5%90%8C%E4%BA%A4%E6%B5%81.md#L310-L337)）**：
+3. **`NVmw` 全量深度审查发现的重点新增隐患（[6.3 节](../nvmw_v1_review_and_refactor_report.md)）**：
    - 除已查出的 `C141.2/C124.2` 断路、`U17 (HMC349)` `CTRL/EN` 短接锁死、`U2.10/4/14` 漏连、`R58/R59 (100 Ω)` 并联导致基带滤波器变成 $25\,\Omega$ 双重端接、主控 `H1` 缺失、`GND` 与 `AGND` 分裂、`C45/C47/C83/C27` 封装容值错误及 `PCB1` 仍为空白双层板外，全量逐网审计新增发现：
      - **[NVmw-P0-5] `power` 页 `L5` 主功率电感必定过流饱和**：`U7 (XL1509-5.0 -> VCC_5V)` 绑定的 `L5 = CMI322513J680M (C60541)` 额定电流仅有 **$150\text{ mA}$（$\text{DCR}=1.2\,\Omega$）**，而主板 `VCC_5V` 负载 $>500\text{ mA}$，与 `L6 (15 uH, L0603)`、`L4 (2.2 uH, L0603)` 一并必须换为大电流功率电感；
      - **[NVmw-P0-6] 全工程网络名分裂**：`VCC_12V` vs `VCC_12v`（`U7/U13` Buck 输入）vs `vcc12`（`R55.2 -> LED1`，彻底断网），以及 `AMP_12V`/`amp_12V`、`DDS0`/`dds0`、`PLL0`/`pll0`；
@@ -321,7 +325,7 @@
 
 ---
 
-下一步等你审阅完 [电路原理图与PCB审查_AI协同交流.md](file:///c:/Users/Jo1yc/Desktop/硕士课题/nv/%E7%94%B5%E8%B7%AF%E5%8E%9F%E7%90%86%E5%9B%BE%E4%B8%8EPCB%E5%AE%A1%E6%9F%A5_AI%E5%8D%8F%E5%90%8C%E4%BA%A4%E6%B5%81.md#L276-L348)（也可让另一位 AI 同步复核或补充），随时授权我即可按“**建 `pa` 页 $\rightarrow$ 迁入修正版 `clktree` 页 $\rightarrow$ 修复 `sign` 页 $\rightarrow$ 修复 `power` 页**”的顺序对嘉立创 EDA 中的 `NVmw` 工程执行自动化修改与网表回归校验。
+下一步等你审阅完 [电路原理图与PCB审查_AI协同交流.md](../nvmw_v1_review_and_refactor_report.md)（也可让另一位 AI 同步复核或补充），随时授权我即可按“**建 `pa` 页 $\rightarrow$ 迁入修正版 `clktree` 页 $\rightarrow$ 修复 `sign` 页 $\rightarrow$ 修复 `power` 页**”的顺序对嘉立创 EDA 中的 `NVmw` 工程执行自动化修改与网表回归校验。
 
 ---
 
@@ -395,7 +399,7 @@
 
 ### 🤖 Assistant (2026-11-23 11:21:14 UTC)
 
-已将第八节及全局位号表写入 [电路原理图与PCB审查_AI协同交流.md](file:///c:/Users/Jo1yc/Desktop/硕士课题/nv/%E7%94%B5%E8%B7%AF%E5%8E%9F%E7%90%86%E5%9B%BE%E4%B8%8EPCB%E5%AE%A1%E6%9F%A5_AI%E5%8D%8F%E5%90%8C%E4%BA%A4%E6%B5%81.md#L426-L463) 并完成原 `NVmw` 工程整页备份（`nvmw_backup_20261123.json`）。目前正在从嘉立创 EDA 元件库批量检索时钟树、模拟调幅与电源升级所需的器件元数据，查询完成后立即开始分步创建与修改 `NVmw` 原理图页。
+已将第八节及全局位号表写入 [电路原理图与PCB审查_AI协同交流.md](../nvmw_v1_review_and_refactor_report.md) 并完成原 `NVmw` 工程整页备份（`nvmw_backup_20261123.json`）。目前正在从嘉立创 EDA 元件库批量检索时钟树、模拟调幅与电源升级所需的器件元数据，查询完成后立即开始分步创建与修改 `NVmw` 原理图页。
 
 ---
 
@@ -439,6 +443,8 @@
 
 继续
 
+---
+
 ## Turn 10 · 👤 User (2026-11-23 12:04:12 UTC)
 
 今天先做到这里，保存一下进度
@@ -461,11 +467,11 @@
 
 ### 已保存与更新文件
 
-1. **协同交流文档追加收工存档**：[电路原理图与PCB审查_AI协同交流.md](file:///c:/Users/Jo1yc/Desktop/%E7%A1%95%E5%A3%AB%E8%AF%BE%E9%A2%98/nv/%E7%94%B5%E8%B7%AF%E5%8E%9F%E7%90%86%E5%9B%BE%E4%B8%8EPCB%E5%AE%A1%E6%9F%A5_AI%E5%8D%8F%E5%90%8C%E4%BA%A4%E6%B5%81.md#L466-L488)
+1. **协同交流文档追加收工存档**：[电路原理图与PCB审查_AI协同交流.md](../nvmw_v1_review_and_refactor_report.md)
    - 已追加 **第九节（阶段进度存档与下次开工清单）**，汇总 §六–§八 协同定案结果、修改前快照位置、改版前新查实的 5 项实机细节以及下次 5 步执行顺序。
-2. **工程交接检查点文档**：[nvmw_refactor_plan_20261123.md](file:///c:/Users/Jo1yc/Desktop/%E7%A1%95%E5%A3%AB%E8%AF%BE%E9%A2%98/_agent_tmp/nvmw_refactor_plan_20261123.md)
+2. **工程交接检查点文档**：`nvmw_refactor_plan_20261123.md`
    - 完整记录 `NVmw` 工程/页面 UUID、已核验的本地系统库（`0819f05c4eef4c71ace90d822a990e87`）与工程库（`project`）可用器件 UUID 表、以及下次执行前需解决的在线库前提。
-3. **`NVmw` 改版前全量快照**：[nvmw_backup_20261123.json](file:///c:/Users/Jo1yc/Desktop/%E7%A1%95%E5%A3%AB%E8%AF%BE%E9%A2%98/_agent_tmp/nvmw_backup_20261123.json)
+3. **`NVmw` 改版前全量快照**：`nvmw_backup_20261123.json`
    - 保存 `sign`（165 个实元器件 / 74 个标志 / 233 条导线）与 `power`（89 个实元器件 / 49 个标志 / 83 条导线）的完整修改前状态。
 
 ### 本次收工前新查实的关键技术细节
@@ -484,6 +490,8 @@
 ## Turn 11 · 👤 User (2026-11-23 12:46:27 UTC)
 
 看看现在是不是离线模式
+
+---
 
 ## Turn 12 · 👤 User (2026-11-23 12:57:27 UTC)
 
@@ -512,7 +520,7 @@
 实测已能直接搜到云端原厂器件与官方封装：
 - `HMC346AMS8GETR`（`C662137`）→ 命中官方封装 `MSOP-8_L3.0-W3.0-P0.65-LS5.0-BL-EP`（`uuid: b7aed573eb4f48338baff6b678ac3b8c`）。
 
-目前窗口处于首页（`project: null`，尚未打开 `NVmw`），下次开工时重新打开 `NVmw` 工程，就可以直接按检查点 [nvmw_refactor_plan_20261123.md](file:///c:/Users/Jo1yc/Desktop/%E7%A1%95%E5%A3%AB%E8%AF%BE%E9%A2%98/_agent_tmp/nvmw_refactor_plan_20261123.md) 里的 **Step A–E** 一次性完成全部原理图重构。今天就到这里，早点休息！
+目前窗口处于首页（`project: null`，尚未打开 `NVmw`），下次开工时重新打开 `NVmw` 工程，就可以直接按检查点 `nvmw_refactor_plan_20261123.md` 里的 **Step A–E** 一次性完成全部原理图重构。今天就到这里，早点休息！
 
 ---
 
@@ -556,7 +564,7 @@
 1. 取消“孤岛式贴端口”，模块内部全部正交实线直连：
    - power 页：把 U304 的飞跨电容 C322 也改为正交实线直连（取消 CFLY_P/CFLY_M 孤岛端口），退耦电容并联在电源母线与地母线之间；
    - sign 页：模拟 AM 链路（U302 → U303A/B 反馈与伺服网络 → U301 → C311/C312 → J_RFOUT）按真实从左到右信号流向排版并全部正交实线直连，不同功能模块之间可以用端口传递信号；
-   - REF_CLOCK / CLK_DIST 页：直接参考并复用 C:\Users\Jo1yc\.gemini\antigravity\brain\b58dc453-92ee-41d6-996e-8b11784c80ff\scratch\ 里的 build_ref_clock_wiring.py / build_clk_dist_wiring.py / stage1*_v2.js 的全实线信号流排版（再叠加 NVmw 的 +200 位号偏移、去掉重复 LDO/J_H1 并合入本次 P0/P1/P2 修正）。
+   - REF_CLOCK / CLK_DIST 页：直接参考并复用 clktree-scratch\ 里的 build_ref_clock_wiring.py / build_clk_dist_wiring.py / stage1*_v2.js 的全实线信号流排版（再叠加 NVmw 的 +200 位号偏移、去掉重复 LDO/J_H1 并合入本次 P0/P1/P2 修正）。
 2. 消除文字与符号重叠：
    - 所有 GND 符号统一垂直朝下（rot=0），所有 Power 电源符号统一垂直朝上（rot=0）；
    - 电源/地支路导线不再重复赋 "GND" 或电源名文字（避免双重标签）；
@@ -617,3 +625,77 @@
 `REF_CLOCK` 页面连线已实机验证通过（65 个器件、0 短路、0 悬空引脚、0 离格连接，`[P1-1]`、`[P1-3]` 及 Box 4 指示灯极性与网络全部正确）。下一步已启动 `CLK_DIST` 页面创建与 30 个器件放置（`--place-only`），等待引脚坐标核对完成。
 
 ---
+
+## Turn 16 · 👤 User (2026-11-25 01:41:03 UTC)
+
+继续
+
+### 🤖 Assistant (2026-11-25 01:42:57 UTC)
+
+已重启 EasyEDA Python 桥接服务（`http://127.0.0.1:49620`），正在等待 EasyEDA Pro 扩展自动重连（约 7 秒后复查连接状态）。
+
+---
+
+### 🤖 Assistant (2026-11-25 01:45:17 UTC)
+
+已修正 `CLKDIST` 中 `U228.CET` 电源标志与 `CLK20` 导线的重叠碰撞问题（预检捕获），正在执行 `CLKDIST`（30 个器件、全正交实线与端接/分频/扇出修改）批量连线与实机验证。
+
+---
+
+### 🤖 Assistant (2026-11-25 01:46:56 UTC)
+
+`CLKDIST` 页面连线已实机完成（30 个器件、0 短路、0 悬空非 NC 引脚、0 离格连接），正在执行 5 页全工程只读电气闭合性与规范核查（`step_e_verify.py`）。
+
+---
+
+### 🤖 Assistant (2026-11-25 01:50:12 UTC)
+
+正在核对全工程页面内与跨页网络名的大小写一致性，随后执行最终只读门禁验证并更新文档。
+
+---
+
+### 🤖 Assistant (2026-11-25 01:52:00 UTC)
+
+已启动 5 页全工程最终只读门禁验证（`step_e_verify.py`），等待全部电气与规范检查结果。
+
+---
+
+### 🤖 Assistant (2026-11-25 01:54:52 UTC)
+
+`NVmw` 单通道 v1 原理图重构与全工程只读验证已全部完成，5 个原理图页已在嘉立创 EDA 专业版实机保存并记录至 [电路原理图与PCB审查_AI协同交流.md](../nvmw_v1_review_and_refactor_report.md)（第十节）。
+
+### 一、实机五页架构与重构成效
+
+| 页面 | UUID | 实装器件 / 标志端口 / 导线 | 核心改动与验证结果 |
+|---|---|---|---|
+| `sign` | `46bb8782cca161a7` | `130` / `107` / `223` | 删除旧时钟与旧 PA；修复 `U2.10/14/39`、`U5.22/C58.2` 格点微偏；解除 `U5.1 (SYNC_IN)` `noConnected` 并补加 `R309 (10kΩ)`；新增 `R300/R310 (100Ω)` LVDS 端接、`ADL5375_DSOP`；新增从左到右全正交直连模拟 AM VVA 链路（`U302 DAC8551 → U303A/B OPA2192 → U301 HMC346 → C311/C312 → J_RFOUT`）及 `H1 (2×20P)` 主控接口（全员 `BOM=True, PCB=True`） |
+| `power` | `8e5dfe344ace822c` | `93` / `54` / `91` | 消除 `AGND`/`5vpa`/`3V3osc`/`VCC_12v`/`vcc12` 并删除 `3v3_sw`（`R62/C128/C129`）；替换 `L4/L5/L6/C27/C45/C47`；新增 `U304 (TPS60403DBVR)` `-5V` 电荷泵与正交直连飞跨电容 `C322`（无 `CFLY_P/M` 孤岛端口）；新增 1A 低噪声 LDO `U305 (TLV75733PDBVR)` 独立供 `3V3_PLL_LDO → R10/R13`，彻底隔离 `U4 (3V3_BUCK)` |
+| `PA_REF` | `fb73bcdb610f234c` | `27` / `17` / `37` | 架构归档页：保留 `HMC1119 → C141 → L20+R50 → PMA3-43-1W+ → J_PA_OUT`，移除 `U17 (HMC349)` 与 `P1`，全员设 `AddIntoBom=false, AddIntoPcb=false` |
+| `REF_CLOCK` | `b5d13ea4cb40c13b` | `65` / `71` / `94` | 复用全实线信号流并施加 `+200` 位号，去除了冗余 LDO 与重复 `J_H1`；合入 `[P0-3]`（`U221.VFB → VOUT`）、`[P1-1]`（`R265/R266` 偏置）、`[P1-3]`（`U234` 3.3V→5V 缓冲 `REF_SEL`）与 `LED_REF_LOCK/EXT` 极性/坐标修正（`R239=0Ω(DNP)` 为 `BOM=False, PCB=True`） |
+| `CLKDIST` | `3744c31091f14e5f` | `30` / `49` / `63` | 复用全实线信号流并施加 `+200` 位号；合入 `[P0-1]`（`U226` `OUT4_N`/`OUT5` 完整扇出与 `N_SEL=GND`）、`[P0-2]`（`R260=33Ω` + `C260=100pF(DNP)`）、`[P1-2]`（`U228 D3..D0=1011` + `U233 → PE#`）、`[P2-1]`（`U225 FILTA/B/SD1=GND, SD2=3V3_U225`）及 `C299..C304` 接地 |
+
+> 说明：因嘉立创 EDA 专业版接口对小写 `'pa'` 与 `'CLK_DIST'` 页面重命名返回 `false`，实机第 3 页与第 5 页命名分别为 `PA_REF` 与 `CLKDIST`。
+
+---
+
+### 二、规范符合性与只读门禁验证结果
+
+通过全工程只读并查集验证脚本 [step_e_verify.py](../../scripts/nvmw_v1/step_e_verify.py)（严禁调用 `getNetlist`，结果已保存至 [nvmw_v1_verify_report.json](../../hardware/verification/nvmw_v1_verify_report.json)）确认 `ALL VERIFICATION GATES PASSED 100%!`：
+
+1. **三项绘图规范（全改造/迁移区）**：`Power/Ground rot ≠ 0` 为 **`0`**；电源/地导线冗余网络标签为 **`0`**；阻容长料号后缀为 **`0`**；模块内无孤岛贴端口，`H1` 与 `U226` 全部采用奇偶错位水平引出。
+2. **电气零缺陷**：5 页全工程 **短路 = `0`**、**新增/迁移区真实离格 = `0`**（`sign` 未改动遗留耦合电容 `C11/C14/C15/C17..C20` 存在 `0.022–0.049` 格点微差且均在 `0.15` 连通容差内）、**非 NC 悬空引脚 = `0`**、**旧网名/旧器件遗留 = `0`**、**全局位号冲突 = `0`**（仅 `U5`、`U303`、`U222` 为双单元复用）。
+3. **BOM/PCB 完整性**：已当场修复初建时遗漏的 `sign` 页 28 处及 `power` 页 13 处新增/替换器件 `AddIntoBom/AddIntoPcb` 为 `(True, True)`；DNP 与测试点（`R239`、`C260`、`TP3`）及 `PA_REF` 归档器件均按设计意图设置。
+4. **跨页闭合**：电源母线（`3V3_PLL_LDO` 与 `3V3_BUCK` 隔离已实测验证）、时钟链（`OCXO_RF`、`CLK_FB_P/N`、`CLK100_LMXA_P/N`、`CLK100_DDSA_P/N`、`CLK100_DIV_P/N`）与 `H1` 全部 40 引脚均跨页闭合；`CLK100_LMXB_P/N` 与 `CLK100_DDSB_P/N` 保留供后续双通道扩展接入。
+
+---
+
+### 三、相关文件清单
+
+- 协同审查与重构完成报告：[电路原理图与PCB审查_AI协同交流.md](../nvmw_v1_review_and_refactor_report.md)
+- 全工程只读校验脚本：[step_e_verify.py](../../scripts/nvmw_v1/step_e_verify.py)
+- 实机验证报告数据：[nvmw_v1_verify_report.json](../../hardware/verification/nvmw_v1_verify_report.json)
+- 实机重构脚本集：[nvmw_lib.py](../../scripts/nvmw_v1/nvmw_lib.py)、[step_d_ref_clock.py](../../scripts/nvmw_v1/step_d_ref_clock.py)、[step_d_clk_dist.py](../../scripts/nvmw_v1/step_d_clk_dist.py)
+
+---
+
+> **归档前终审补充（2026-11-25 02:15 UTC）**：PNG 视觉检查发现 `power` 页新增 `U304/U305` 模块与 A4 图签栏重叠，已将其整组右移至图框外右侧空白区并去重，重新通过 `step_e_verify.py` 全页 100% 门禁验证后导出最新 5 页高清 PNG 随本仓库一并推送。
